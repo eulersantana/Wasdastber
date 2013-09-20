@@ -8,10 +8,10 @@
             <column name="ID" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="sala" class="br.com.ufba.roomsmanageradmin.model.Sala" fetch="join">
+        <many-to-one name="sala" class="br.com.ufba.roomsmanager.model.Sala" fetch="join">
             <column name="SALA_ID" />
         </many-to-one>
-        <many-to-one name="pessoa" class="br.com.ufba.roomsmanageradmin.model.Usuario" fetch="join">
+        <many-to-one name="pessoa" class="br.com.ufba.roomsmanager.model.Usuario" fetch="join">
             <column name="PESSOA_ID" />
         </many-to-one>
         <property name="dataEntrada" type="java.util.Date">
