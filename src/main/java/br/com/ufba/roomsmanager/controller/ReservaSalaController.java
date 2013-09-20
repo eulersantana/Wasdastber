@@ -43,13 +43,13 @@ public class ReservaSalaController implements Serializable{
 	@PostConstruct
 	void init(){  
 		
-		eventModel = new DefaultScheduleModel();	
-		reserva = new ReservaSala();
-		selecionado = new ReservaSala();
-		
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-
+            eventModel = new DefaultScheduleModel();	
+            reserva = new ReservaSala();
+            selecionado = new ReservaSala();
+            
+            SessionFactory sf = Hibernate.getSessionFactory();
+            Session session = sf.openSession();
+            
 	    List<ReservaSala> l = (List<ReservaSala>) session.createQuery("FROM ReservaSala").list();
 	    for (ReservaSala reservaSala : l) {
 

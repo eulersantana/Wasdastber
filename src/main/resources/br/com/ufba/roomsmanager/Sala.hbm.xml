@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 20/08/2013 18:15:47 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="br.com.ufba.roomsmanageradmin.model.Sala" table="sala">
+    <class name="br.com.ufba.roomsmanager.model.Sala" table="sala">
         <id name="id" type="int">
             <column name="ID" />
             <generator class="assigned" />
@@ -34,9 +34,6 @@
         </property>
         <property name="setor_id" type="int">
             <column name="SETOR_ID" />
-        </property>
-        <property name="setorNome" type="java.lang.String">
-            <column name="SETORNOME" />
         </property>
     </class>
 </hibernate-mapping>
