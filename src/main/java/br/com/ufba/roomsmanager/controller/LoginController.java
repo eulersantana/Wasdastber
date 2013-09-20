@@ -23,10 +23,12 @@ public class LoginController extends HttpServlet{
 		session = request.getSession(true);
 		
 		if(login.validate()){
-			session.setAttribute("logado", user);
+                    session.setAttribute("logado", user);
+                    out.println("<script>location.href='"+request.getRequestURL()+"/../index.do';</script>");
+                    return;
 		}
 		else{
-			JOptionPane.showMessageDialog(null, "Credenciais incorretas.");
+                    JOptionPane.showMessageDialog(null, "Credenciais incorretas.");
 		}
 		
 		out.println("<script>location.href='"+request.getRequestURL()+"/../index.jsp';</script>");
