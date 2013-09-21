@@ -38,7 +38,7 @@ public class LoginController extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		PrintWriter out = response.getWriter();
 		session = request.getSession();
-		int conf = JOptionPane.showConfirmDialog(null,"Deseja sair do sistema ?","RoomsManager",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+		int conf = JOptionPane.showConfirmDialog(null,"Deseja sair do sistema ?","Controle de Sala",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 		
 		if(conf == 0){
 			session.invalidate();
