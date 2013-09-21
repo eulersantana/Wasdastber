@@ -92,7 +92,6 @@ public class ReservaSalaController implements Serializable{
     /********************************************************/
     public void addEvent(){
 		
-    	Date date = pularData(1,0,0,0,0,event.getEndDate());
         reserva.setAceito(true);
 
         //1900
