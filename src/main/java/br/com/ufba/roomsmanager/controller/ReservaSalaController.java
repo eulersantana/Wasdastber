@@ -53,122 +53,116 @@ public class ReservaSalaController implements Serializable{
 	    List<ReservaSala> l = (List<ReservaSala>) session.createQuery("FROM ReservaSala").list();
 	    for (ReservaSala reservaSala : l) {
 
-	    	Sala sala = reservaSala.getSala();
+                Sala sala = reservaSala.getSala();
+
+                if(!sala.getTipo().toLowerCase().equals("laboratorio") && (reservaSala.getStatus() != 2))
+                {
 	    	
-	    	if(!sala.getTipo().toLowerCase().equals("laboratorio") && (reservaSala.getStatus() != 2))
-	    	{
-	    	
-		    	/** ADD 0 formula encontrado para solucionar o Problema com '.0' na data **/
-		    	Date dataI = pularData(0,0,0,0,0,(Date)reservaSala.getDataInicio());
-		    	Date horaI = pularData(0,0,0,0,0,(Date)reservaSala.getHorarioInicio());
-		    	
-		    	Date dataF = pularData(0,0,0,0,0,(Date)reservaSala.getDataFim());
-		    	Date horaF = pularData(0,0,0,0,0,(Date)reservaSala.getHorarioTermino());
-		    	
-	//		    	JOptionPane.showMessageDialog(null, "M1 "+mergeDateHour(dataI,horaI)+"\n"+
-	//		    										"M2 "+mergeDateHour(dataF,horaF)
-	//		    										);
-		    	
-				reservaSala.setDataInicio(pularData(0,0,1900,0,0,mergeDateHour(dataI,horaI)));
-		    	reservaSala.setDataFim(pularData(0,0,1900,0,0,mergeDateHour(dataF, horaF)));
-		    	
-		    	//JOptionPane.showMessageDialog(null,"data "+d);
-		    	
-		    	DefaultScheduleEvent evento = new DefaultScheduleEvent(sala.getNome()+" - "+reservaSala.getResponsavel()+" "+reservaSala.getReservadoPara(),reservaSala.getDataInicio(),reservaSala.getDataFim());
-		    	evento.setId(reservaSala.getId()+"");
-		    	evento.setData(reservaSala.getId());
-		    	
-	    		if(reservaSala.getStatus() == 1)
-	    		{
-		    		evento.setStyleClass("style1");
-		    	}
-		    	else
-		    	{
-		    		evento.setStyleClass("style2");
-		    	}
-	
-	    		eventModel.addEvent(evento);
+                    /** ADD 0 formula encontrado para solucionar o Problema com '.0' na data **/
+                    Date dataI = pularData(0,0,0,0,0,(Date)reservaSala.getDataInicio());
+                    Date horaI = pularData(0,0,0,0,0,(Date)reservaSala.getHorarioInicio());
+
+                    Date dataF = pularData(0,0,0,0,0,(Date)reservaSala.getDataFim());
+                    Date horaF = pularData(0,0,0,0,0,(Date)reservaSala.getHorarioTermino());
+
+                    reservaSala.setDataInicio(pularData(0,0,1900,0,0,mergeDateHour(dataI,horaI)));
+                    reservaSala.setDataFim(pularData(0,0,1900,0,0,mergeDateHour(dataF, horaF)));
+
+                    DefaultScheduleEvent evento = new DefaultScheduleEvent(sala.getNome()+" - "+reservaSala.getResponsavel()+" "+reservaSala.getReservadoPara(),reservaSala.getDataInicio(),reservaSala.getDataFim());
+                    evento.setId(reservaSala.getId()+"");
+                    evento.setData(reservaSala.getId());
+
+                    if(reservaSala.getStatus() == 1)
+                    {
+                        evento.setStyleClass("style1");
+                    }
+                    else
+                    {
+                        evento.setStyleClass("style2");
+                    }
+
+                    eventModel.addEvent(evento);
 	    	}
 	    	
-		}
+            }
 	    session.close();
 	    
     }  
 	
-	/********************************************************/
-
+    /********************************************************/
     public void addEvent(){
 		
     	Date date = pularData(1,0,0,0,0,event.getEndDate());
-		reserva.setAceito(true);
-		
-		//1900
-		Date hora = reserva.getHorarioInicio();
-		reserva.setDataInicio(mergeDateHour(pularData(0,0,1900,0,0, event.getStartDate()), hora));
-		hora = reserva.getHorarioTermino();
-		reserva.setDataFim(mergeDateHour(pularData(0,0,1900,0,0,event.getEndDate()), hora));
-		
-		Sala sala = new Sala();
-		sala.setId(Integer.parseInt(sala_id));
-		reserva.setSala(sala);
-		
-		if(reserva.getHorarioTermino().toString().trim().isEmpty())
-		{
-			reserva.setDataFim(event.getEndDate());
-		}
+        reserva.setAceito(true);
+
+        //1900
+        Date hora = reserva.getHorarioInicio();
+        reserva.setDataInicio(mergeDateHour(pularData(0,0,1900,0,0, event.getStartDate()), hora));
+        hora = reserva.getHorarioTermino();
+        reserva.setDataFim(mergeDateHour(pularData(0,0,1900,0,0,event.getEndDate()), hora));
+
+        Sala sala = new Sala();
+        sala.setId(Integer.parseInt(sala_id));
+        reserva.setSala(sala);
+
+        if(reserva.getHorarioTermino().toString().trim().isEmpty())
+        {
+            reserva.setDataFim(event.getEndDate());
+        }
 		
     	//JOptionPane.showMessageDialog(null,reserva.toString());
     	SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;
-	    try{
-			
-	    	tx = session.beginTransaction();
-	    	session.saveOrUpdate(reserva); 
-	    	tx.commit();
-	    	
-	    	String msg = (this.labelAction.equals("Salvar")) ? "Reserva adicionada com sucesso!" : "Reserva atualizado com sucesso!";
-	    	FacesMessage mesg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva de sala",msg);
-    	    addMessage(mesg);
-	    	
-	    	List<Sala> l = (List<Sala>) session.createQuery("FROM Sala WHERE id = "+reserva.getSala().getId()).list();
-    		for (Sala s : l) {
-				sala = s;
-			}
-    		
-	    	if(event.getId() == null){
-	    		eventModel.addEvent(new DefaultScheduleEvent(sala.getNome()+" - "+reserva.getResponsavel()+" "+reserva.getReservadoPara(),reserva.getDataInicio(),reserva.getDataFim()));
-	    	}else{  
-	            eventModel.updateEvent(event);  
-	    	}
-	    	
-	        this.event = new DefaultScheduleEvent();
-	        this.reserva = new ReservaSala();
+        Session session = sf.openSession();
+        Transaction tx = null;
+        
+        try{
+
+            tx = session.beginTransaction();
+            session.saveOrUpdate(reserva); 
+            tx.commit();
+
+            String msg = (this.labelAction.equals("Salvar")) ? "Reserva adicionada com sucesso!" : "Reserva atualizado com sucesso!";
+            FacesMessage mesg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva de sala",msg);
+            addMessage(mesg);
+
+            List<Sala> l = (List<Sala>) session.createQuery("FROM Sala WHERE id = "+reserva.getSala().getId()).list();
+            for (Sala s : l) {
+                sala = s;
+            }
+
+            if(event.getId() == null){
+                eventModel.addEvent(new DefaultScheduleEvent(sala.getNome()+" - "+reserva.getResponsavel()+" "+reserva.getReservadoPara(),reserva.getDataInicio(),reserva.getDataFim()));
+            }else{  
+                eventModel.updateEvent(event);  
+            }
+
+            this.event = new DefaultScheduleEvent();
+            this.reserva = new ReservaSala();
 	        
     	}catch (HibernateException e) {
-    		JOptionPane.showMessageDialog(null,e.getMessage());
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
+            JOptionPane.showMessageDialog(null,e.getMessage());
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
     	}finally {
-	    	session.close();
-	    }
+            session.close();
+        }
 	    
     }
     
     public void onEventSelect(SelectEvent selectEvent) {
     	this.event = (ScheduleEvent) selectEvent.getObject();
     	this.reserva = getReserva(this.event);
-	    this.reserva.setDataInicio(dateToFormat(this.reserva.getDataInicio(),ptBrFormat));
-	    this.reserva.setDataFim(dateToFormat(this.reserva.getDataFim(),ptBrFormat));
-	    this.labelAction = "Atualizar";
-	    this.sala_id = ""+this.reserva.getSala().getId();
-	}  
+        this.reserva.setDataInicio(dateToFormat(this.reserva.getDataInicio(),ptBrFormat));
+        this.reserva.setDataFim(dateToFormat(this.reserva.getDataFim(),ptBrFormat));
+        this.labelAction = "Atualizar";
+        this.sala_id = ""+this.reserva.getSala().getId();
+    }  
       
     public void onDateSelect(SelectEvent selectEvent) {
     	Date d = (Date) selectEvent.getObject();
     	this.reserva.setDataInicio(dateToFormat(d,ptBrFormat));
-		this.event = new DefaultScheduleEvent("Novo Evento", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-		this.labelAction = "Salvar";
+        this.event = new DefaultScheduleEvent("Novo Evento", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        this.labelAction = "Salvar";
     }  
       
     public void onEventMove(ScheduleEntryMoveEvent event){
