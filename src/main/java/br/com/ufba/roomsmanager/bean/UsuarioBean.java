@@ -24,61 +24,65 @@ import br.com.ufba.roomsmanager.model.*;
 @ManagedBean
 public class UsuarioBean implements Serializable{
 		
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
+    private Usuario usuario = new Usuario();
+    private DataModel<Usuario> usuarios;
+    private ArrayList<Tipo> tipos = new ArrayList<Tipo>();
+    private String tipo_id;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
 	
-	private Usuario usuario = new Usuario();
-	private DataModel<Usuario> usuarios;
-	private ArrayList<Tipo> tipos = new ArrayList<Tipo>();
-	private String tipo_id;
-		
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public DataModel<Usuario> getUsuarios()
-	{
-		return usuarios;
-	}
+    public DataModel<Usuario> getUsuarios()
+    {
+        return usuarios;
+    }
 
-	public ArrayList<Tipo> getTipos()
-	{
-		return tipos;
-	}
+    public void setTipos(List tipos){
+        this.tipos = (ArrayList<Tipo>) tipos;
+    }
+    
+    public ArrayList<Tipo> getTipos()
+    {
+            return tipos;
+    }
 
-	public void setTipo_id(String tipo_id) {
-		this.tipo_id = tipo_id;
-	}
+    public void setTipo_id(String tipo_id) {
+            this.tipo_id = tipo_id;
+    }
 
-	public String getTipo_id()
-	{
-		return tipo_id;
-	}
+    public String getTipo_id()
+    {
+            return tipo_id;
+    }
 
-	@PostConstruct
-	public void UsuarioBean(){
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
-	    usuarios = new ListDataModel(l);
-	    tipos = (ArrayList<Tipo>) session.createQuery("FROM Tipo").list();
-	    session.close();
-	}
+    @PostConstruct
+    public void UsuarioBean(){
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
+        usuarios = new ListDataModel(l);
+        tipos = (ArrayList<Tipo>) session.createQuery("FROM Tipo").list();
+        session.close();
+    }
 
-	public String create(ActionEvent ae) throws ParseException
-	{
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;   
+    public String create(ActionEvent ae) throws ParseException
+    {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;   
 	    
-	    try{
-	    	tx = session.beginTransaction();
-	    	usuario.setTipo_id(Integer.valueOf(tipo_id));
-	    	session.saveOrUpdate(usuario); 
-	    	tx.commit();
+        try{
+            tx = session.beginTransaction();
+            usuario.setTipo_id(Integer.valueOf(tipo_id));
+            session.saveOrUpdate(usuario); 
+            tx.commit();
     	}catch (HibernateException e) {
     		if (tx!=null) tx.rollback();
 	    	e.printStackTrace(); 
@@ -88,54 +92,55 @@ public class UsuarioBean implements Serializable{
 	    return "list?faces-redirect=true";
     }
     
-	public String update(RowEditEvent event) throws ParseException
-	{
-		SessionFactory sf = Hibernate.getSessionFactory();
-		Session session = sf.openSession();
-		Transaction tx = null;
-		
-		select();
-		
-		try{
-			tx = session.beginTransaction();
-			usuario.setTipo_id(Integer.valueOf(tipo_id));
-			session.update(usuario);
-			session.flush();
-			tx.commit(); 
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-				e.printStackTrace(); 
-		}finally {
-		session.close(); 
-		}
-		
-		return "list"; 
-	}
-
-	public void delete()
+    public String update(RowEditEvent event) throws ParseException
     {
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+
+        select();
+
+        try{
+            tx = session.beginTransaction();
+            usuario.setTipo_id(Integer.valueOf(tipo_id));
+            session.update(usuario);
+            session.flush();
+            tx.commit(); 
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+                e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+
+        return "list"; 
+    }
+
+    public void delete()
+    {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
 	
-	    select();
+        select();
 	    
-	    try{
-	    	tx = session.beginTransaction();
-	    	session.delete(usuario); 
-	    	tx.commit();
-	    	List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
-		    usuarios = new ListDataModel(l);
+        try{
+            tx = session.beginTransaction();
+            session.delete(usuario); 
+            tx.commit();
+            List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
+            usuarios = new ListDataModel(l);
     	}catch (HibernateException e) {
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
+            if (tx!=null) tx.rollback();
+                e.printStackTrace(); 
     	}finally {
-	    	session.close();
-	    }
+            session.close();
+        }
     }
 	
-	public void select()
-	{
+    public void select()
+    {
         this.usuario = this.usuarios.getRowData();
     }
+    
 }
