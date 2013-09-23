@@ -43,8 +43,7 @@ public class Sala implements Serializable{
 		this.arcondicionado = arcondicionado;
 		this.computadores = computadores;
 		this.capacidade = capacidade;
-		this.setor_id = 1;
-		this.setorNome = "";
+		this.setor_id = setor_id;
 	}
 
 	public Sala(int id, String nome, boolean quadro, boolean retroprojetor,
@@ -61,7 +60,6 @@ public class Sala implements Serializable{
 		this.computadores = computadores;
 		this.capacidade = capacidade;
 		this.setor_id = setor_id;
-		this.setorNome = "";
 	}
 
 	public int getId() {
@@ -129,7 +127,7 @@ public class Sala implements Serializable{
 
 	public String getSetorNome() {
 		return setorNome;
-	}
+        }
 
 	public void setSetorNome(String setorNome) {
 		this.setorNome = setorNome;

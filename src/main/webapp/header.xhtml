@@ -61,15 +61,10 @@ xmlns:p="http://primefaces.org/ui" >
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#{request.contextPath}/usuario/create.do">Cadastrar</a></li>
-                                                <li><a href="#{request.contextPath}/tipo/list.do">Listar</a></li>
+                                                <li><a href="#{request.contextPath}/tipo/lista.do">Listar</a></li>
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="logout">
-                                        <a href="#{request.contextPath}/login?logout">
-                                            <img title="Sair do Sistema" src="#{request.contextPath}/images/logout.png" alt="Sair do Sistema" />
-                                        </a>
-                                    </li>				              
                                     <li>
                                         <div class="btn-group">
                                             <button class="btn rm">Usuário</button>
@@ -79,9 +74,14 @@ xmlns:p="http://primefaces.org/ui" >
                                             <ul class="dropdown-menu">
                                                 <!-- dropdown menu links -->
                                                 <li><a  href="#{request.contextPath}/usuario/create.do">Cadastrar</a></li>
-                                                <li><a  href="#{request.contextPath}/usuario/list.do">Listar</a></li>
+                                                <li><a  href="#{request.contextPath}/usuario/lista.do">Listar</a></li>
                                             </ul>
                                         </div>
+                                    </li>
+                                    <li class="logout">
+                                        <a href="#{request.contextPath}/login?logout">
+                                            <img title="Sair do Sistema" src="#{request.contextPath}/images/logout.png" alt="Sair do Sistema" />
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

@@ -230,16 +230,16 @@ public class ReservaSalaController implements Serializable{
 	    
 	    try
 	    {
-	    	for (ReservaSala rs : (List<ReservaSala>) session.createQuery("FROM ReservaSala WHERE id = "+event.getData().toString()).list()){
-				res = rs;
-			};
+	    	for(ReservaSala rs : (List<ReservaSala>) session.createQuery("FROM ReservaSala WHERE id = "+event.getData().toString()).list()){
+                    res = rs;
+                }
 	    }
 	    catch (HibernateException e)
 	    {
-			// TODO: handle exception
+                // TODO: handle exception
 	    	e.printStackTrace();
 	    	JOptionPane.showMessageDialog(null,e.getMessage());
-		}
+            }
 	    session.close();
 	    
 	    return res;
@@ -296,23 +296,23 @@ public class ReservaSalaController implements Serializable{
     	return data;
 	}
 	
-	/********************** GETS e SETS ************************/
-	
-	public String getSala_id() {
-		return sala_id;
-	}
-	
-	public void setSala_id(String sala_id) {
-		this.sala_id = sala_id;
-	}
-	
-	public List<Sala> getSalas(){
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    this.salas = (List<Sala>) session.createQuery("FROM Sala WHERE tipo <> 'Laboratorio'").list();
-	    session.close();
-		return salas;
-	}
+    /********************** GETS e SETS ************************/
+
+    public String getSala_id() {
+            return sala_id;
+    }
+
+    public void setSala_id(String sala_id) {
+            this.sala_id = sala_id;
+    }
+
+    public List<Sala> getSalas(){
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        this.salas = (List<Sala>) session.createQuery("FROM Sala WHERE tipo <> 'Laboratorio'").list();
+        session.close();
+            return salas;
+    }
 
     public ScheduleModel getEventModel() {  
         return eventModel;  

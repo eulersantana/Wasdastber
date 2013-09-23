@@ -70,10 +70,10 @@ public class Usuario {
     @Override
     public String toString()
     {
-            return  "ID: "+this.id+"\n"+
-                            "NUM. CADASTRO: "+this.num_matricula+"\n"+
-                            "EMAIL: "+this.email+"\n"+
-                            "NOME: "+this.nome;
+        return  "ID: "+this.id+"\n"+
+                "NUM. CADASTRO: "+this.num_matricula+"\n"+
+                "EMAIL: "+this.email+"\n"+
+                "NOME: "+this.nome;
     }
 	
 }

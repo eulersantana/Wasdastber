@@ -42,9 +42,9 @@ public class Filtro implements Filter {
         String logado = (String)session.getAttribute("logado");
 
         if(logado==null){
-                res.sendRedirect(((HttpServletRequest)(request)).getContextPath() + "/index.jsp"); 
+            res.sendRedirect(((HttpServletRequest)(request)).getContextPath() + "/index.jsp"); 
         }else{
-                chain.doFilter(request, response);
+            chain.doFilter(request, response);
         }
 
     }

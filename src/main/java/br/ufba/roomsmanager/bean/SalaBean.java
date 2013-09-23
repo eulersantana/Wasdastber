@@ -136,8 +136,6 @@ public class SalaBean implements Serializable{
 	 public void onEdit(RowEditEvent event) {  
 	        FacesMessage msg = new FacesMessage("Sala editada", ((Sala) event.getObject()).getNome());  
 	        Sala sala = (Sala) event.getObject();
-	        //Sala user = Facade.find(use.getId()); 
-	        System.out.print(sala.getNome()+" "+sala.getSetorNome()+"\n");
 	        FacesContext.getCurrentInstance().addMessage(null, msg);  
 	}  
 	      

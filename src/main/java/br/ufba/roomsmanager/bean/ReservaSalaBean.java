@@ -4,19 +4,14 @@ import br.ufba.roomsmanager.dao.Hibernate;
 import br.ufba.roomsmanager.model.Sala;
 import br.ufba.roomsmanager.model.ReservaSala;
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.*;
 
 import javax.faces.bean.*;
-import javax.faces.event.*;
 import javax.swing.JOptionPane;
 
-import org.apache.jasper.tagplugins.jstl.ForEach;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 @ManagedBean
 public class ReservaSalaBean implements Serializable{
@@ -31,11 +26,11 @@ public class ReservaSalaBean implements Serializable{
     private String sala_id;
 
     public String getSala_id() {
-            return sala_id;
+        return sala_id;
     }
 
     public void setSala_id(String sala_id) {
-            this.sala_id = sala_id;
+        this.sala_id = sala_id;
     }
 
     public List<ReservaSala> getReservas(){

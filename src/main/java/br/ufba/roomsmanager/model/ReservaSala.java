@@ -1,6 +1,5 @@
 package br.ufba.roomsmanager.model;
 
-import br.ufba.roomsmanager.dao.SalaDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -41,62 +40,7 @@ public class ReservaSala implements Serializable {
 		this.sala = new Sala();
 	}
 
-	//Usando no WS
-	public ReservaSala(int sala_id, Date dataInicio, Date dataFim,
-			Date horarioInicio, Date horarioTermino, String responsavel,
-			String reservadoPara, boolean eventoPrivado, String email,
-			String telefone, String observacao, boolean aceito) {
-		super();
-		
-		SalaDAO s = new SalaDAO();
-		try {
-			this.sala = s.getSalaById(sala_id);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
-			e.printStackTrace();
-		}
-		this.dataInicio = dataInicio;
-		this.dataFim = dataFim;
-		this.horarioInicio = horarioInicio;
-		this.horarioTermino = horarioTermino;
-		this.responsavel = responsavel;
-		this.reservadoPara = reservadoPara;
-		this.eventoPrivado = eventoPrivado;
-		this.email = email;
-		this.telefone = telefone;
-		this.observacao = observacao;
-		this.aceito = aceito;
-	}
-	
-	//Usando no WS
-	public ReservaSala(int sala_id, Date dataInicio, Date dataFim,
-			Date horarioInicio, Date horarioTermino, String responsavel,
-			String reservadoPara, boolean eventoPrivado, String email,
-			String telefone, String observacao, boolean aceito,int status) {
-		super();
-		
-		SalaDAO s = new SalaDAO();
-		try {
-			this.sala = s.getSalaById(sala_id);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
-			e.printStackTrace();
-		}
-		this.dataInicio = dataInicio;
-		this.dataFim = dataFim;
-		this.horarioInicio = horarioInicio;
-		this.horarioTermino = horarioTermino;
-		this.responsavel = responsavel;
-		this.reservadoPara = reservadoPara;
-		this.eventoPrivado = eventoPrivado;
-		this.email = email;
-		this.telefone = telefone;
-		this.observacao = observacao;
-		this.aceito = aceito;
-		this.status = status;
-	}
-	
-	public ReservaSala(int id, Sala sala, Date dataInicio, Date dataFim,
+        public ReservaSala(int id, Sala sala, Date dataInicio, Date dataFim,
 			Date horarioInicio, Date horarioTermino, String responsavel,
 			String reservadoPara, boolean eventoPrivado, String email,
 			String telefone, String observacao, int status) {
@@ -116,44 +60,8 @@ public class ReservaSala implements Serializable {
 		this.status = status;
 	}
 
-	public ReservaSala(int sala_id, String dataInicio, String dataFim,
-			String horarioInicio, String horarioTermino, String responsavel,
-			String reservadoPara, boolean eventoPrivado, String email,
-			String telefone, String observacao) {
-		super();
-		
-		SalaDAO s = new SalaDAO();
-		try {
-			this.sala = s.getSalaById(sala_id);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
-			e.printStackTrace();
-		}
-		this.dataInicio = dataEn(dataInicio);
-		this.dataFim = dataEn(dataFim);
-		this.horarioInicio = stringToDateH(horarioInicio);
-		this.horarioTermino = stringToDateH(horarioTermino);
-		this.responsavel = responsavel;
-		this.reservadoPara = reservadoPara;
-		this.eventoPrivado = eventoPrivado;
-		this.email = email;
-		this.telefone = telefone;
-		this.observacao = observacao;
-	}
-	
 	public Sala getSala(){
             return this.sala;
-	}
-
-	public Sala getSala(int sala_id){
-            SalaDAO s = new SalaDAO();
-            try {
-                    this.sala = s.getSalaById(sala_id);
-            } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
-                    e.printStackTrace();
-            }
-            return sala;
 	}
 	
 	public void setSala(Sala sala) {
