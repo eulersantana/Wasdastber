@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/08/2013 18:25:12 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+  <class name="br.ufba.roomsmanager.model.ControleAcesso" table="controle_acesso">
+    <id name="id" type="int">
+      <column name="ID"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="br.ufba.roomsmanager.model.Sala" fetch="join" name="sala">
+      <column name="SALA_ID"/>
+    </many-to-one>
+    <many-to-one class="br.ufba.roomsmanager.model.Usuario" fetch="join" name="pessoa">
+      <column name="PESSOA_ID"/>
+    </many-to-one>
+    <property name="dataEntrada" type="java.util.Date">
+      <column name="DATA_ENTRADA"/>
+    </property>
+    <property name="dataSaida" type="java.util.Date">
+      <column name="DATA_SAIDA"/>
+    </property>
+    <property name="horaEntrada" type="java.util.Date">
+      <column name="HORA_ENTRADA"/>
+    </property>
+    <property name="horaSaida" type="java.util.Date">
+      <column name="HORA_SAIDA"/>
+    </property>
+    <property name="eChave" type="boolean">
+      <column name="E_CHAVE"/>
+    </property>
+  </class>
+</hibernate-mapping>
