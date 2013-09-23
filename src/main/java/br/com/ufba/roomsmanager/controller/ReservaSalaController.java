@@ -132,7 +132,13 @@ public class ReservaSalaController implements Serializable{
             if(event.getId() == null){
                 eventModel.addEvent(new DefaultScheduleEvent(sala.getNome()+" - "+reserva.getResponsavel()+" "+reserva.getReservadoPara(),reserva.getDataInicio(),reserva.getDataFim()));
             }else{  
-                eventModel.updateEvent(event);  
+                //Se status igual a dois eh pq o usuario naum aceitou o pedido de reserva
+                if(reserva.getStatus() == 2){
+                    eventModel.deleteEvent(event);
+                }
+                else{
+                    eventModel.updateEvent(event);  
+                }
             }
 
             this.event = new DefaultScheduleEvent();

@@ -13,7 +13,7 @@ public class Myconnection{
     
      private static String usuario = "root";
      private static String senha = "123";
-     private static String url = "jdbc:mysql://localhost:3306/roomsManager_development";
+     private static String url = "jdbc:mysql://localhost:3306/controleSala";
 
     public static Statement getStatement() throws SQLException
     {

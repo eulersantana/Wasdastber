@@ -142,18 +142,18 @@ public class ReservaSala implements Serializable {
 	}
 	
 	public Sala getSala(){
-		return this.sala;
+            return this.sala;
 	}
 
 	public Sala getSala(int sala_id){
-		SalaDAO s = new SalaDAO();
-		try {
-			this.sala = s.getSalaById(sala_id);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
-			e.printStackTrace();
-		}
-		return sala;
+            SalaDAO s = new SalaDAO();
+            try {
+                    this.sala = s.getSalaById(sala_id);
+            } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null,"RESERVA ERRO: "+e.getMessage());
+                    e.printStackTrace();
+            }
+            return sala;
 	}
 	
 	public void setSala(Sala sala) {
@@ -330,22 +330,22 @@ public class ReservaSala implements Serializable {
 		return data;
     }
 	
-	@Override
-	public String toString(){
-		return  "ID: "+id+"\n"+
-				"ID SALA: " +sala.getId()+"\n"+
-				"DATA INICIO: "+dataInicio+"\n"+
-				"DATA FIM: "+dataFim+"\n"+
-				"HORARIO INICIO: "+horarioInicio+"\n"+
-				"HORARIO TERMINO: "+horarioTermino+"\n"+
-				"RESPONSAVEL: "+responsavel+"\n"+
-				"RESERVA PARA: "+reservadoPara+"\n"+
-				"EVENTO PRIVADO: "+eventoPrivado+"\n"+
-				"EMAIL: "+email+"\n"+
-				"TELEFONE: "+telefone+"\n"+
-				"OBSERVACAO: "+observacao+"\n"+
-				"ACEITO: "+aceito+"\n"+
-				"STATUS: "+status;
-	}
+    @Override
+    public String toString(){
+        return  "ID: "+id+"\n"+
+                "SALA: " +sala.getNome()+"\n"+
+                "DATA INICIO: "+dataInicio+"\n"+
+                "DATA FIM: "+dataFim+"\n"+
+                "HORARIO INICIO: "+horarioInicio+"\n"+
+                "HORARIO TERMINO: "+horarioTermino+"\n"+
+                "RESPONSAVEL: "+responsavel+"\n"+
+                "RESERVA PARA: "+reservadoPara+"\n"+
+                "EVENTO PRIVADO: "+eventoPrivado+"\n"+
+                "EMAIL: "+email+"\n"+
+                "TELEFONE: "+telefone+"\n"+
+                "OBSERVACAO: "+observacao+"\n"+
+                "ACEITO: "+aceito+"\n"+
+                "STATUS: "+status;
+    }
 	
 }

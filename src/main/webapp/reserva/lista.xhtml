@@ -1,0 +1,134 @@
+<ui:composition template="../template.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui" >
+
+    <ui:define name="title">
+        Controle de Sala :: Lista de salas reservadas
+    </ui:define>
+	
+    <ui:define name="content">
+        <section id="geral">
+            <p:layoutUnit position="center" id="conteudo">
+                <h:form id="form"> 
+                    <p:growl id="messages" showDetail="true" /> 	
+                    <p:dataTable id="reserva" var="reservas" value="#{reservaSalaBean.reservas}"
+                        paginator="true" rows="15" 
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                        rowsPerPageTemplate="5,10,20,50,100"
+                        editable="false"
+                    >
+                        <f:facet name="header">
+                            <h:outputText value="Lista de salas reservadas"/>
+                        </f:facet>	  
+                        <p:column headerText="Sala">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.sala.nome}"/>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText value="#{reservas.sala.nome}"/>  
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Período Início">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.dataInicio}">
+                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy" locale="pt_BR"/>
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:calendar id="dInicio" value="#{reservas.dataInicio}"  locale="pt_BR" pattern="dd/MM/yyyy" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Período Término">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.dataFim}">
+                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy" locale="pt_BR"/>
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:calendar id="dTermino" value="#{reservas.dataFim}"  locale="pt_BR" pattern="dd/MM/yyyy" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Horário de Início">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.horarioInicio}">
+                                        <f:convertDateTime type="date" pattern="HH:mm" locale="pt_BR"/>
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:calendar id="hInicio" value="#{reservas.horarioInicio}" pattern="HH:mm" timeOnly="true" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Horário de Término">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.horarioTermino}">
+                                        <f:convertDateTime type="date" pattern="HH:mm" locale="pt_BR"/>
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:calendar id="hTermino" value="#{reservas.horarioTermino}" pattern="HH:mm" timeOnly="true" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Responsável">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.responsavel}"/>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText id="responsavel" value="#{reservas.responsavel}" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Email do responsável">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.email}"/>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText id="email" value="#{reservas.email}" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Telefone">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{reservas.telefone}"/>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText id="telefone" value="#{reservas.telefone}" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="Status">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{(reservas.status == 1) ? 'Aceito' : (reservas.status == 2) ? 'Não Aceito' : 'Em espera'}"/>
+                                </f:facet>
+                                <f:facet name="input">  
+                                    <p:inputText id="status" value="#{reservas.status}" required="true"/>
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </section>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                    dlg.show();
+            });
+        </script>
+    </ui:define>
+</ui:composition>
