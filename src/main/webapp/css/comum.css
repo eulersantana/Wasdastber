@@ -34,3 +34,11 @@ form:status_true{
 	top: 16%;
 	height: 10%;
 }
+
+#setorDialogo{
+	float: left;
+	position: absolute;
+	right: 68%;
+	top: 16%;
+	height: 10%;
+}
