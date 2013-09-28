@@ -24,148 +24,196 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.primefaces.event.RowEditEvent;
 
-
 @ManagedBean
-public class SalaBean implements Serializable{
-	private static final long serialVersionUID = -6735027036534961738L;
-	private static ArrayList<Sala> listaSalas = new ArrayList<Sala>();
-	private ArrayList<Setor> listaSetor = new ArrayList<Setor>();
-	private DataModel<Sala> sal;
-	private Sala sala = new Sala();
-	private String setor_id;
-	
-	public String getSetor_id() {
-		return setor_id;
-	}
+public class SalaBean implements Serializable {
 
-	public void setSetor_id(String setor_id) {
-		this.setor_id = setor_id;
-	}
-	
-	@PostConstruct
-	public void SalaBean(){
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
-	    sal= new ListDataModel(listaSalas);
-	    listaSetor = (ArrayList<Setor>) session.createQuery("FROM Setor").list();	
-	    session.close();
-	}
-	
-	public void create(ActionEvent ae) throws ParseException
-	{
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;
-	    	    
-	    try{
-	    	tx = session.beginTransaction();
-	    	sala.setSetor_id(Integer.valueOf(setor_id));
-	    	session.saveOrUpdate(sala); 
-	    	tx.commit();
-    	}catch (HibernateException e) {
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
-	    	JOptionPane.showMessageDialog(null, e);
-    	}finally {
-	    	session.close();
-	    }
-	    sala = new Sala();
-	    FacesMessage msg = new FacesMessage("Sala adiconada com sucesso");  
-	    FacesContext.getCurrentInstance().addMessage(null, msg);
+    private static final long serialVersionUID = -6735027036534961738L;
+    private static ArrayList<Sala> listaSalas = new ArrayList<Sala>();
+    private ArrayList<Setor> listaSetor = new ArrayList<Setor>();
+    private DataModel<Sala> sal;
+    private Sala sala = new Sala();
+    private String setor_id;
+    private Sala salaRow;
+
+    public String getSetor_id() {
+        return setor_id;
     }
-	
-	public String update(RowEditEvent event) throws ParseException
-	{
-		SessionFactory sf = Hibernate.getSessionFactory();
-		Session session = sf.openSession();
-		Transaction tx = null;
-		
-		sala = (Sala) event.getObject();
-		
-		sala.setSetor_id(Integer.valueOf(setor_id));
-		
-		try{
-			tx = session.beginTransaction();
-			session.update(sala);
-			session.flush();
-			tx.commit(); 
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-				e.printStackTrace(); 
-		}finally {
-			session.close(); 
-		}
-		
-		return "list"; 
-	}
-	
-	
-	public void delete()
-    {
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;
-	
-	    select();
-	    
-	    try{
-	    	tx = session.beginTransaction();
-	    	session.delete(sala); 
-	    	tx.commit();
-	    	listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
-		    sal= new ListDataModel(listaSalas);
-    	}catch (HibernateException e) {
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
-	    	JOptionPane.showMessageDialog(null, "Não foi possivel deletar "+sala.getNome()+".\nExiste alguma dependência.");
-    	}finally {
-	    	session.close();
-	    }
+
+    public void setSetor_id(String setor_id) {
+        this.setor_id = setor_id;
     }
-	
-	public void select()
-	{
+
+    @PostConstruct
+    public void SalaBean() {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
+        sal = new ListDataModel(listaSalas);
+        listaSetor = (ArrayList<Setor>) session.createQuery("FROM Setor").list();
+        session.close();
+    }
+
+    public void create(ActionEvent ae) throws ParseException {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+        String nomeSala ="";
+        try {
+            nomeSala = sala.getNome();
+            if(verificaSala(nomeSala)){
+                tx = session.beginTransaction();
+                sala.setSetor_id(Integer.valueOf(setor_id));
+                session.saveOrUpdate(sala);
+                tx.commit();
+                sala = new Sala();
+                FacesMessage msg = new FacesMessage("Sala adicionada com sucesso!");  
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }else{
+                sala = new Sala();
+                FacesMessage msg = new FacesMessage("A sala "+ nomeSala+" já existe.");  
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e);
+        } finally {
+            session.close();
+        }
+       
+    }
+
+    public String update(RowEditEvent event) throws ParseException {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+
+        sala = (Sala) event.getObject();
+
+        sala.setSetor_id(Integer.valueOf(setor_id));
+
+        try {
+            tx = session.beginTransaction();
+            session.update(sala);
+            session.flush();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return "list";
+    }
+
+    public void delete() {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+        String nomeSala = "";
+        int escolha = 0;
+        select();
+
+        try {
+            nomeSala = sala.getNome();
+           escolha = JOptionPane.showConfirmDialog(null, "Sera deletado "+nomeSala, "Deletando sala", 1);
+            if(escolha == JOptionPane.OK_OPTION){
+            
+                tx = session.beginTransaction();
+                session.delete(sala);
+                tx.commit();
+                listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
+                sal = new ListDataModel(listaSalas);
+            }else{
+                nomeSala = "";
+                sala = new Sala();
+            }
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Não foi possivel deletar " + sala.getNome() + ".\nExiste alguma dependência.");
+        } finally {
+            session.close();
+        }
+    }
+
+    
+    public void select() {
         this.sala = this.sal.getRowData();
 //        JOptionPane.showMessageDialog(null, sala.getNome());
     }
-	 private String getRandomModel() {  
-	        return UUID.randomUUID().toString().substring(0, 8);  
-	 }
-	 
-	 public void onEdit(RowEditEvent event) {  
-	        FacesMessage msg = new FacesMessage("Sala editada", ((Sala) event.getObject()).getNome());  
-	        Sala sala = (Sala) event.getObject();
-	        FacesContext.getCurrentInstance().addMessage(null, msg);  
-	}  
-	      
-    public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Edição Cancelada", ((Sala) event.getObject()).getNome());  
-        JOptionPane.showMessageDialog(null, "Edição cancelada");
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
-	
-	
-	public Sala getSala(){
-		return sala;
-	}
-		
-	
-	public ArrayList<Sala> getListaSalas(){
-		for(Sala auxSala : listaSalas){
-			for(Setor auxSetor : listaSetor){
-				if(auxSala.getSetor_id() == auxSetor.getId()){
-					auxSala.setSetorNome(auxSetor.getNome());
-				}
-			}
-		}
-		return listaSalas;
-	}
 
-	public DataModel<Sala> getSal(){		    
-	    return sal;
-	}
-	public ArrayList<Setor> getListaSetor(){
-		return listaSetor;
-	}
+    private String getRandomModel() {
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    public void onEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Sala editada", ((Sala) event.getObject()).getNome());
+        Sala sala = (Sala) event.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edição Cancelada", ((Sala) event.getObject()).getNome());
+        JOptionPane.showMessageDialog(null, "Edição cancelada");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public Sala getSala() {
+        return sala;
+    }
+
+    public ArrayList<Sala> getListaSalas() {
+        for (Sala auxSala : listaSalas) {
+            for (Setor auxSetor : listaSetor) {
+                if (auxSala.getSetor_id() == auxSetor.getId()) {
+                    auxSala.setSetorNome(auxSetor.getNome());
+                }
+            }
+        }
+        return listaSalas;
+    }
+
+    public DataModel<Sala> getSal() {
+        return sal;
+    }
+
+    public ArrayList<Setor> getListaSetor() {
+        return listaSetor;
+    }
+
+    public boolean verificaSala(String nomeSala) throws ParseException {
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+        ArrayList<Sala> listaSetor = new ArrayList<Sala>();
+
+        try {
+            tx = session.beginTransaction();
+            listaSetor = (ArrayList<Sala>) session.createQuery("FROM Sala where nome = '" + nomeSala + "'").list();
+            for (Sala aux : listaSetor) {
+                if (nomeSala.equals(aux.getNome())) {
+                    return false;
+                }
+            }
+            session.flush();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return true;
+    }
 }

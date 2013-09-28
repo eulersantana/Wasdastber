@@ -42,3 +42,8 @@ form:status_true{
 	top: 16%;
 	height: 10%;
 }
+
+.ui-button{
+    height: 29px !important;
+    margin-bottom: 6px !important;
+}

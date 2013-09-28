@@ -24,8 +24,8 @@
                         <div class="row-fluid">					
                             <p:message for="form"></p:message>
                             <h:form id="form">
-
-                                <p:fieldset legend="Cadastro de Sala">
+                                <h1>Cadastro de Sala</h1>
+                                <p:separator style="width:100%;height:1px" />
                                     <div class="offset3">
 
 
@@ -35,7 +35,7 @@
                                             <p:selectOneMenu style="margin-bottom:2px;" id="dSetor" required="true" value="#{salaBean.setor_id}" requiredMessage="O campo sala é Obrigatório">  
                                                 <f:selectItems value="#{setorBean.setores}" var="setor" itemLabel="#{setor.nome}" itemValue="#{setor.id}"/>
                                             </p:selectOneMenu>							 
-                                            <button type="button" class="btn btn-default"  onclick="eventDialog.show();" title="Adicionar um novo setor"><span class="icon-red icon-plus-sign "></span></button> 
+                                            <p:commandButton id="botSetor" update=":form:dSetor"  oncomplete="eventDialog.show()" title="Adicionar um novo setor"  icon="ui-icon-circle-plus"></p:commandButton>
                                             <p:outputLabel for="dNome">Nome</p:outputLabel>
                                             <p:inputText id="dNome" value="#{salaBean.sala.nome}" size="60" lang="pt_BR" required="true"/>
                                             <p:outputLabel></p:outputLabel>
@@ -115,17 +115,13 @@
                                             </p:outputPanel>	
                                         </h:panelGrid> 
                                     </div>
-                                </p:fieldset>
-                                <div class="span12">
-                                    <div class="bt span">
-                                        <div class="span2">
+                                    <p:separator style="width:100%;height:1px" />
+				       <div style="text-align:center;">
                                             <p:commandButton value="Enviar" ajax="false" actionListener="#{salaBean.create}" update="growl"/>
-                                        </div>
-                                        <div class="span2">
+                                        
                                             <p:commandButton value="Resetar" type="reset"/>
                                         </div>
-                                    </div>
-                                </div>
+                                  
                             </h:form>
                         </div>
                         <h:form>
