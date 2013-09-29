@@ -193,12 +193,12 @@ public class SalaBean implements Serializable {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
-        ArrayList<Sala> listaSetor = new ArrayList<Sala>();
+        ArrayList<Sala> listaSala = new ArrayList<Sala>();
 
         try {
             tx = session.beginTransaction();
-            listaSetor = (ArrayList<Sala>) session.createQuery("FROM Sala where nome = '" + nomeSala + "'").list();
-            for (Sala aux : listaSetor) {
+            listaSala = (ArrayList<Sala>) session.createQuery("FROM Sala where nome = '" + nomeSala + "'").list();
+            for (Sala aux : listaSala) {
                 if (nomeSala.equals(aux.getNome())) {
                     return false;
                 }

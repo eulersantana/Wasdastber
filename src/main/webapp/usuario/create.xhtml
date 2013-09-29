@@ -1,64 +1,66 @@
 <ui:composition template="../template.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-  	xmlns:p="http://primefaces.org/ui" >
-	
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" >
+
     <ui:define name="content">
-    	<section id="geral">
-			<p:layoutUnit position="center" id="conteudo">
-				<div class="container-fluid span10">
-					<div class="row-fluid">
-						<p:message for="form_create"></p:message>
-							<h:form id="form_create">
-								
-								<p:fieldset legend="Cadastro de Usuario" >
-								<h:panelGrid id="panelGrid" columns="3">
-								<p:outputLabel for="dTipo">Tipo</p:outputLabel>
-								<p:selectOneMenu id="dTipo" required="true" value="#{usuarioBean.tipo_id}" style="width: 300px" requiredMessage="O campo tipo é Obrigatório">  
-					            	<f:selectItems var="tipo" value="#{usuarioBean.tipos}" itemLabel="#{tipo.descricao}"  itemValue="#{tipo.id}"/>
-						        </p:selectOneMenu>							 
-						     	<p:lightBox iframe="true" width="425px" height="150px">  
-								    <h:outputLink value="../tipo/modal.do" >  
-								        <button type="button" class="btn btn-default" title="Adicionar um novo tipo"><span class="icon-red icon-plus-sign "></span></button> 
-								    </h:outputLink>  
-								</p:lightBox> 
-								<p:outputLabel for="e-mail">Email</p:outputLabel>
-								<p:inputText id="e-mail" style="width: 300px" value="#{usuarioBean.usuario.email}" required="true" title="Email" requiredMessage="O campo 'Email' Ã© ObrigatÃ³rio"  validatorMessage="Email invÃ¡lido">
-									<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-								</p:inputText>
-								<p:outputLabel></p:outputLabel>
-								<p:outputLabel for="senha">Senha</p:outputLabel>
-								<p:password id="senha" style="width: 300px" value="#{usuarioBean.usuario.senha}" required="true" title="Senha" requiredMessage="O campo 'Senha' Ã© ObrigatÃ³rio"/>
-								<p:outputLabel></p:outputLabel>
-								<p:outputLabel for="nome">Nome</p:outputLabel>
-								<p:inputText id="nome" style="width: 300px" value="#{usuarioBean.usuario.nome}" required="true" title="Nome" requiredMessage="O campo 'Nome' Ã© ObrigatÃ³rio"/>
-								<p:outputLabel></p:outputLabel>
-								<p:outputLabel for="num_cadastro">Numero de Cadastro</p:outputLabel>
-								<p:inputMask id="num_cadastro" style="width: 300px" value="#{usuarioBean.usuario.num_matricula}" title="Numero de Matricula" mask="999999"/>
-								<p:outputLabel></p:outputLabel>
-								
-								</h:panelGrid>
-								</p:fieldset>
-								
-								<div class="span12">
-									<div class="bt span">
-										<div class="span2">
-									  		<p:commandButton value="Criar" id="enviar" ajax="false" actionListener="#{usuarioBean.create}"/>
-									  	</div>
-									  	<div class="span2">
-									  		<p:commandButton value="Resetar" update="panelGrid" process="@this">
-										        <p:resetInput target="panelGrid"/>
-										    </p:commandButton>
-									  	</div>
-								  	</div>
-						  		</div>
-								
-							</h:form>
-					</div>
-				</div>
-			</p:layoutUnit>
-		</section>
-	</ui:define>
+        <section id="geral">
+            <p:layoutUnit position="center" id="conteudo">
+                <div class="container-fluid span10">
+                    <div class="row-fluid">
+                        <p:message for="form_create"></p:message>
+                        <h:form id="form_create">
+
+                            <h1>Cadastro de Usuário</h1>
+                            <p:separator style="width:100%;height:1px" />
+                            <h:panelGrid id="panelGrid" columns="3">
+                                <p:outputLabel for="dTipo">Tipo</p:outputLabel>
+                                <p:selectOneMenu id="dTipo" required="true" value="#{usuarioBean.tipo_id}" style="width: 300px" requiredMessage="O campo tipo é Obrigatório">  
+                                    <f:selectItems var="tipo" value="#{usuarioBean.tipos}" itemLabel="#{tipo.descricao}"  itemValue="#{tipo.id}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton id="botSetor"  oncomplete="eventDialog.show()" title="Adicionar um novo tipo"  icon="ui-icon-circle-plus"></p:commandButton>  
+                                <p:outputLabel for="e-mail">Email</p:outputLabel>
+                                <p:inputText id="e-mail" style="width: 300px" value="#{usuarioBean.usuario.email}" required="true" title="Email" requiredMessage="O campo 'Email' Ã© ObrigatÃ³rio"  validatorMessage="Email invÃ¡lido">
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </p:inputText>
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel for="senha">Senha</p:outputLabel>
+                                <p:password id="senha" style="width: 300px" value="#{usuarioBean.usuario.senha}" required="true" title="Senha" requiredMessage="O campo 'Senha' Ã© ObrigatÃ³rio"/>
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel for="nome">Nome</p:outputLabel>
+                                <p:inputText id="nome" style="width: 300px" value="#{usuarioBean.usuario.nome}" required="true" title="Nome" requiredMessage="O campo 'Nome' Ã© ObrigatÃ³rio"/>
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel for="num_cadastro">Numero de Cadastro</p:outputLabel>
+                                <p:inputMask id="num_cadastro" style="width: 300px" value="#{usuarioBean.usuario.num_matricula}" title="Numero de Matricula" mask="999999"/>
+                                <p:outputLabel></p:outputLabel>
+
+                            </h:panelGrid>
+                            <p:separator style="width:100%;height:1px" />
+                            <div style="text-align:center;">
+                                <p:commandButton value="Criar" id="enviar" ajax="false" actionListener="#{usuarioBean.create}"/>
+                                <p:commandButton value="Resetar" update="panelGrid" process="@this"></p:commandButton>
+                            </div>
+
+                        </h:form>
+                    </div>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false" life="6000" />
+                        <div class="container-fluid span8" id="setorDialogo">
+                            <p:dialog widgetVar="eventDialog" header="Cadastra setor" showEffect="clip" hideEffect="clip">  
+                                <h:panelGrid id="eventDetails" columns="2">
+                                    <p:outputLabel for="tdesc">Nome</p:outputLabel>
+                                    <p:inputText id="tdesc" value="#{tipoBean.tipo.descricao}" size="60" lang="pt_BR" required="true"/>
+                                    <p:commandButton value="Criar" actionListener="#{tipoBean.create}" ajax="false"/>
+                                    <p:commandButton value="Resetar" type="reset"/>
+
+                                </h:panelGrid>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </div>
+            </p:layoutUnit>
+        </section>
+    </ui:define>
 </ui:composition>
