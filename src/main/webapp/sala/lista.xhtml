@@ -146,7 +146,7 @@
                             <p:rowEditor />  
                         </p:column>
                         <p:column style="width:4%">  
-                            <p:commandButton id="deleteButton" action="#{salaBean.delete}" update="sala" icon="ui-icon-trash" title="Deletar"/>  
+                            <p:commandButton id="deleteButton" action="#{salaBean.delete(salas)}" update="sala" icon="ui-icon-trash" title="Deletar"/>  
                         </p:column> 
                     </p:dataTable>
                 </h:form>

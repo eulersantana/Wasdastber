@@ -111,13 +111,13 @@ public class SalaBean implements Serializable {
         return "list";
     }
 
-    public void delete() {
+    public void delete(Sala sala) {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
         String nomeSala = "";
         int escolha = 0;
-        select();
+        //select();
 
         try {
             nomeSala = sala.getNome();
