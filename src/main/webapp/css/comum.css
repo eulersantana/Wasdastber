@@ -42,6 +42,13 @@ form:status_true{
 	top: 16%;
 	height: 10%;
 }
+#usuarioDialogo{
+	float: left;
+	position: absolute;
+	right: 88%;
+	top: 25%;
+	height: 10%;
+}
 
 .ui-button{
     height: 29px !important;

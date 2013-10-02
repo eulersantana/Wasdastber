@@ -21,12 +21,14 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.ufba.roomsmanager.dao.Hibernate;
+import br.ufba.roomsmanager.model.Sala;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
-public class UsuarioBean implements Serializable{
-		
-    private static final long serialVersionUID = 1L;
+public class UsuarioBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Usuario usuario = new Usuario();
     private DataModel<Usuario> usuarios;
     private ArrayList<Tipo> tipos = new ArrayList<Tipo>();
@@ -35,36 +37,33 @@ public class UsuarioBean implements Serializable{
     public Usuario getUsuario() {
         return usuario;
     }
-	
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
-    public DataModel<Usuario> getUsuarios()
-    {
+    public DataModel<Usuario> getUsuarios() {
         return usuarios;
     }
 
-    public void setTipos(List tipos){
+    public void setTipos(List tipos) {
         this.tipos = (ArrayList<Tipo>) tipos;
     }
-    
-    public ArrayList<Tipo> getTipos()
-    {
-            return tipos;
+
+    public ArrayList<Tipo> getTipos() {
+        return tipos;
     }
 
     public void setTipo_id(String tipo_id) {
-            this.tipo_id = tipo_id;
+        this.tipo_id = tipo_id;
     }
 
-    public String getTipo_id()
-    {
-            return tipo_id;
+    public String getTipo_id() {
+        return tipo_id;
     }
 
     @PostConstruct
-    public void UsuarioBean(){
+    public void UsuarioBean() {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
@@ -73,75 +72,88 @@ public class UsuarioBean implements Serializable{
         session.close();
     }
 
-    public String create(ActionEvent ae) throws ParseException
-    {
+    public void create(ActionEvent ae) throws ParseException {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
-        Transaction tx = null;   
-	    
-        try{
+        Transaction tx = null;
+        String email = "";
+        email = usuario.getEmail();
+        System.out.println("E-mail : " + email);
+        try {
             tx = session.beginTransaction();
             usuario.setTipo_id(Integer.valueOf(tipo_id));
-            session.saveOrUpdate(usuario); 
+            session.saveOrUpdate(usuario);
             tx.commit();
-    	}catch (HibernateException e) {
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
-    	}finally {
-	    	session.close();
-	    }
-	    return "list?faces-redirect=true";
+            usuario = new Usuario();
+            FacesMessage msg = new FacesMessage("Usuario adicionado com sucesso.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            usuario = new Usuario();
+            FacesMessage msg = new FacesMessage("E-mail ou Matricula já estão em uso! ");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        } finally {
+            session.close();
+        }
+
+        //return "list?faces-redirect=true";
     }
-    
-    public String update(RowEditEvent event) throws ParseException
-    {
+
+    public String update(RowEditEvent event) throws ParseException {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
 
         select();
 
-        try{
+        try {
             tx = session.beginTransaction();
             usuario.setTipo_id(Integer.valueOf(tipo_id));
             session.update(usuario);
             session.flush();
-            tx.commit(); 
-        }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-                e.printStackTrace(); 
-        }finally {
-            session.close(); 
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        return "list"; 
+        return "list";
     }
 
-    public void delete()
-    {
+    public void delete() {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
-	
+
         select();
-	    
-        try{
+
+        try {
             tx = session.beginTransaction();
-            session.delete(usuario); 
+            session.delete(usuario);
             tx.commit();
             List<Usuario> l = (List<Usuario>) session.createQuery("FROM Usuario").list();
             usuarios = new ListDataModel(l);
-    	}catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-                e.printStackTrace(); 
-    	}finally {
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
             session.close();
         }
     }
-	
-    public void select()
-    {
+
+    public void select() {
         this.usuario = this.usuarios.getRowData();
     }
-    
+
+   
 }
