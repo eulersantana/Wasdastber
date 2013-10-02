@@ -117,7 +117,7 @@ public class SalaBean implements Serializable {
         Transaction tx = null;
         String nomeSala = "";
         int escolha = 0;
-        //select();
+        
 
         try {
             nomeSala = sala.getNome();
@@ -145,10 +145,10 @@ public class SalaBean implements Serializable {
     }
 
     
-    public void select() {
-        this.sala = this.sal.getRowData();
-//        JOptionPane.showMessageDialog(null, sala.getNome());
-    }
+//    public void select() {
+//        this.sala = this.sal.getRowData();
+////        JOptionPane.showMessageDialog(null, sala.getNome());
+//    }
 
     private String getRandomModel() {
         return UUID.randomUUID().toString().substring(0, 8);

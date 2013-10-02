@@ -99,7 +99,7 @@ public class SetorBean implements Serializable {
 	}
 	
 	
-	public void delete()
+	public void delete(Setor setor)
     {
 		SessionFactory sf = Hibernate.getSessionFactory();
 	    Session session = sf.openSession();
