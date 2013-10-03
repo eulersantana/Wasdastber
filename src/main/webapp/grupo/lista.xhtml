@@ -1,0 +1,64 @@
+<ui:composition template="../template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" >
+
+    <ui:define name="title">
+        RoomsManagerAdmin :: Lista de Salas
+    </ui:define>
+
+    <ui:define name="content">
+        <section id="geral">
+            <p:layoutUnit position="center" id="conteudo">
+                <h:form id="form"> 
+                    <p:growl id="messages" showDetail="true" /> 	
+                    <p:dataTable id="grupo" var="grupos" value="#{grupoBean.listaGrupo}"
+                                 paginator="true" rows="15" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15"
+                                 editable="true"
+                                 >
+                        <p:ajax event="rowEdit" listener="#{grupoBean.update}" update=":form:messages" />
+                            <!--<p:ajax event="rowEditCancel" listener="#{grupoBean.onCancel}" update=":form:messages" />-->
+                        <f:facet name="header">
+                            <h:outputText value="Lista de grupos"/>
+                        </f:facet>	  
+                        <p:column headerText="Grupo">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{grupos.nome}"/>
+                                </f:facet>							
+                                <f:facet name="input">  
+                                    <p:inputText value="#{grupos.nome}" style="width:100%"/>  
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>						
+                        <p:column headerText="Professo Responsavel">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{grupos.professorResponvel}"/>
+                                </f:facet>							
+                                <f:facet name="input">  
+                                    <p:inputText value="#{grupos.professorResponvel}" style="width:100%"/>  
+                                </f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column id="update" style="width:4%">  
+                            <p:rowEditor />  
+                        </p:column>
+                        <p:column style="width:4%">  
+                            <p:commandButton id="deleteButton" action="#{grupoBean.delete(grupos)}" update="grupo" icon="ui-icon-trash" title="Deletar"/>  
+                        </p:column> 
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </section>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                dlg.show();
+            });
+        </script>
+    </ui:define>
+</ui:composition>

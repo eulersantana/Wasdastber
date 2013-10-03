@@ -1,0 +1,40 @@
+<ui:composition template="../template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" >
+
+    <ui:define name="content">
+        <section id="geral">
+            <p:growl id="growl" showDetail="false" life="6000" />
+            <p:layoutUnit position="center" id="conteudo">
+                <div class="container-fluid span10">
+                    <div class="row-fluid">
+                        <p:message for="form_create"></p:message>
+                        <h:form id="form_create">
+
+                            <h1>Cadastro de Grupo</h1>
+                            <p:separator style="width:100%;height:1px" />
+                            <h:panelGrid id="panelGrid" columns="3">
+                                <p:outputLabel for="nome">Nome</p:outputLabel>
+                                <p:inputText id="nome" value="#{grupoBean.grupo.nome}" size="60" lang="pt_BR" required="true"/>
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel for="pResponsavel">Professor Responsavel</p:outputLabel>
+                                <p:inputText id="pResponsavel" value="#{grupoBean.grupo.professorResponvel}" size="60" lang="pt_BR" required="true"/>
+                                <p:outputLabel></p:outputLabel>
+                            </h:panelGrid>
+                            <p:separator style="width:100%;height:1px" />
+                            <div style="text-align:center;">
+                                <p:commandButton value="Criar" id="enviar" ajax="false" actionListener="#{grupoBean.create}" update="growl"/>
+                                <p:commandButton value="Resetar" update="panelGrid" process="@this"></p:commandButton>
+                            </div>
+
+                        </h:form>
+                    </div>
+                    
+                </div>
+            </p:layoutUnit>
+        </section>
+    </ui:define>
+</ui:composition>
