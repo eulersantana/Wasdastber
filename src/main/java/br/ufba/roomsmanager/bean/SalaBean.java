@@ -33,7 +33,8 @@ public class SalaBean implements Serializable{
 	private DataModel<Sala> sal;
 	private Sala sala = new Sala();
 	private String setor_id;
-	
+        private Sala salaSelecionada = new Sala();
+        
 	public String getSetor_id() {
 		return setor_id;
 	}
@@ -44,17 +45,17 @@ public class SalaBean implements Serializable{
 	
 	@PostConstruct
 	public void SalaBean(){
-		SessionFactory sf = Hibernate.getSessionFactory();
+            SessionFactory sf = Hibernate.getSessionFactory();
 	    Session session = sf.openSession();
 	    listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
-	    sal= new ListDataModel(listaSalas);
+    	    sal= new ListDataModel(listaSalas);
 	    listaSetor = (ArrayList<Setor>) session.createQuery("FROM Setor").list();	
 	    session.close();
 	}
 	
 	public void create(ActionEvent ae) throws ParseException
 	{
-		SessionFactory sf = Hibernate.getSessionFactory();
+            SessionFactory sf = Hibernate.getSessionFactory();
 	    Session session = sf.openSession();
 	    Transaction tx = null;
 	    	    
@@ -63,11 +64,11 @@ public class SalaBean implements Serializable{
 	    	sala.setSetor_id(Integer.valueOf(setor_id));
 	    	session.saveOrUpdate(sala); 
 	    	tx.commit();
-    	}catch (HibernateException e) {
+            }catch (HibernateException e) {
     		if (tx!=null) tx.rollback();
 	    	e.printStackTrace(); 
 	    	JOptionPane.showMessageDialog(null, e);
-    	}finally {
+            }finally {
 	    	session.close();
 	    }
 	    sala = new Sala();
@@ -77,67 +78,69 @@ public class SalaBean implements Serializable{
 	
 	public String update(RowEditEvent event) throws ParseException
 	{
-		SessionFactory sf = Hibernate.getSessionFactory();
-		Session session = sf.openSession();
-		Transaction tx = null;
-		
-		sala = (Sala) event.getObject();
-		
-		sala.setSetor_id(Integer.valueOf(setor_id));
-		
-		try{
-			tx = session.beginTransaction();
-			session.update(sala);
-			session.flush();
-			tx.commit(); 
-		}catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-				e.printStackTrace(); 
-		}finally {
-			session.close(); 
-		}
-		
-		return "list"; 
+            SessionFactory sf = Hibernate.getSessionFactory();
+            Session session = sf.openSession();
+            Transaction tx = null;
+
+            sala = (Sala) event.getObject();
+
+            sala.setSetor_id(Integer.valueOf(setor_id));
+
+            try{
+                tx = session.beginTransaction();
+                session.update(sala);
+                session.flush();
+                tx.commit(); 
+            }catch (HibernateException e) {
+                if (tx!=null) tx.rollback();
+                        e.printStackTrace(); 
+            }finally {
+                session.close(); 
+            }
+
+            return "list"; 
 	}
 	
 	
-	public void delete()
+    public void delete(Sala salaSelecionada)
     {
-		SessionFactory sf = Hibernate.getSessionFactory();
-	    Session session = sf.openSession();
-	    Transaction tx = null;
-	
-	    select();
-	    
-	    try{
-	    	tx = session.beginTransaction();
-	    	session.delete(sala); 
-	    	tx.commit();
-	    	listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
-		    sal= new ListDataModel(listaSalas);
-    	}catch (HibernateException e) {
-    		if (tx!=null) tx.rollback();
-	    	e.printStackTrace(); 
-	    	JOptionPane.showMessageDialog(null, "Não foi possivel deletar "+sala.getNome()+".\nExiste alguma dependência.");
-    	}finally {
-	    	session.close();
-	    }
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+
+        select();
+
+        try{
+            tx = session.beginTransaction();
+            JOptionPane.showMessageDialog(null, salaSelecionada.getId()+" "+salaSelecionada.getNome()+" => "+salaSelecionada.getSetor_id());
+            session.delete(sala); 
+            tx.commit();
+            listaSalas = (ArrayList<Sala>) session.createQuery("FROM Sala").list();
+            sal= new ListDataModel(listaSalas);
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+            JOptionPane.showMessageDialog(null, "Não foi possivel deletar "+sala.getNome()+".\nExiste alguma dependência.");
+        }finally {
+            session.close();
+        }
     }
 	
-	public void select()
-	{
+    public void select()
+    {
         this.sala = this.sal.getRowData();
-//        JOptionPane.showMessageDialog(null, sala.getNome());
+//        JOptionPane.showMessageDialog(null, sala.getId()+"\n"+sala.getSetor_id());
     }
-	 private String getRandomModel() {  
-	        return UUID.randomUUID().toString().substring(0, 8);  
-	 }
-	 
-	 public void onEdit(RowEditEvent event) {  
-	        FacesMessage msg = new FacesMessage("Sala editada", ((Sala) event.getObject()).getNome());  
-	        Sala sala = (Sala) event.getObject();
-	        FacesContext.getCurrentInstance().addMessage(null, msg);  
-	}  
+    
+    private String getRandomModel() {  
+           return UUID.randomUUID().toString().substring(0, 8);  
+    }
+
+    public void onEdit(RowEditEvent event) {  
+           FacesMessage msg = new FacesMessage("Sala editada", ((Sala) event.getObject()).getNome());  
+           Sala sala = (Sala) event.getObject();
+           FacesContext.getCurrentInstance().addMessage(null, msg);  
+   }  
 	      
     public void onCancel(RowEditEvent event) {  
         FacesMessage msg = new FacesMessage("Edição Cancelada", ((Sala) event.getObject()).getNome());  
@@ -146,26 +149,35 @@ public class SalaBean implements Serializable{
     }  
 	
 	
-	public Sala getSala(){
-		return sala;
-	}
-		
-	
-	public ArrayList<Sala> getListaSalas(){
-		for(Sala auxSala : listaSalas){
-			for(Setor auxSetor : listaSetor){
-				if(auxSala.getSetor_id() == auxSetor.getId()){
-					auxSala.setSetorNome(auxSetor.getNome());
-				}
-			}
-		}
-		return listaSalas;
-	}
+    public Sala getSala(){
+            return sala;
+    }
 
-	public DataModel<Sala> getSal(){		    
-	    return sal;
-	}
-	public ArrayList<Setor> getListaSetor(){
-		return listaSetor;
-	}
+
+    public ArrayList<Sala> getListaSalas(){
+            for(Sala auxSala : listaSalas){
+                    for(Setor auxSetor : listaSetor){
+                            if(auxSala.getSetor_id() == auxSetor.getId()){
+                                    auxSala.setSetorNome(auxSetor.getNome());
+                            }
+                    }
+            }
+            return listaSalas;
+    }
+
+    public DataModel<Sala> getSal(){		    
+        return sal;
+    }
+    public ArrayList<Setor> getListaSetor(){
+            return listaSetor;
+    }
+
+    public Sala getSalaSelecionada() {
+        return salaSelecionada;
+    }
+
+    public void setSalaSelecionada(Sala salaSelecionada) {
+        this.salaSelecionada = salaSelecionada;
+    }
+    
 }

@@ -12,10 +12,10 @@ xmlns:p="http://primefaces.org/ui" >
     <ui:define name="content">
         <section id="geral">
             <p:layoutUnit position="center" id="conteudo">
-                <h:form id="form"> 
+                <h:form id="form" styleClass="center_90"> 
                     <p:growl id="messages" showDetail="true" /> 	
                     <p:dataTable id="reserva" var="reservas" value="#{reservaSalaBean.reservas}"
-                        paginator="true" rows="15" 
+                        paginator="true" rows="10" 
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                         rowsPerPageTemplate="5,10,20,50,100"
                         editable="false"

@@ -4,13 +4,17 @@
  */
 package br.ufba.roomsmanager.servlet.reservaSala;
 
+import br.ufba.roomsmanager.dao.Hibernate;
+import br.ufba.roomsmanager.model.ReservaSala;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -32,6 +36,13 @@ public class ListaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+
+        List<ReservaSala> reservas = (List<ReservaSala>) session.createQuery("FROM ReservaSala ORDER BY data_inicio DESC").list();
+        
+        request.setAttribute("reservas", reservas);
+
         RequestDispatcher view = getServletContext().getRequestDispatcher("/reserva/index.jsp");
         view.forward(request,response);	
     }

@@ -1,9 +1,9 @@
 <ui:composition
-xmlns="http://www.w3.org/1999/xhtml"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:p="http://primefaces.org/ui" >
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" >
     <header id="topo_pagina">
         <h:form>
             <p:growl id="messages"/>
@@ -67,12 +67,22 @@ xmlns:p="http://primefaces.org/ui" >
                                     </li>
                                     <li>
                                         <div class="btn-group">
+                                            <button class="btn rm">Reserva</button>
+                                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>					              		
+                                            <ul class="dropdown-menu">
+                                                <li><a  href="#{request.contextPath}/reserva/lista.do">Listar</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="btn-group">
                                             <button class="btn rm">Usuário</button>
                                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                             </button>					              		
                                             <ul class="dropdown-menu">
-                                                <!-- dropdown menu links -->
                                                 <li><a  href="#{request.contextPath}/usuario/create.do">Cadastrar</a></li>
                                                 <li><a  href="#{request.contextPath}/usuario/lista.do">Listar</a></li>
                                             </ul>

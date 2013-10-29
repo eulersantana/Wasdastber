@@ -223,21 +223,44 @@ public class ReservaSala implements Serializable {
 		
         return data;
     }
-	
-	private Date stringToDateH(String text){
-	    DateFormat df = new SimpleDateFormat("hh:mm");
-	    Date data = null;
-	    
-		try {
-			 data = df.parse(text);
-		} catch (ParseException e) {
-			JOptionPane.showMessageDialog(null,"ERRO:"+e.getMessage());
-			e.printStackTrace();
-		}
-		
-		return data;
+        
+    /**
+     * 
+     * @return o horario de inicio no formato hh:mm
+     */
+    public String getHorarioInicioHM(){
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        return (this.horarioInicio != null) ? df.format(this.horarioInicio) : "";
     }
-	
+    
+    /**
+     * 
+     * @return Horario de termino no formato hh:mm
+     */
+    public String getHorarioTerminoHM(){
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        return (this.horarioTermino != null) ? df.format(this.horarioTermino) : "";
+    }
+
+    /**
+     * 
+     * @return A data de inicio no formato dia/mes/ano
+     */
+    public String getDataInicioPtBr(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return (this.dataInicio != null) ? df.format(this.dataInicio) : "";
+    }
+    
+    /**
+     * 
+     * @return Data de termino no formato dia/mes/ano
+     */
+    public String getDataFimPtBr(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return (this.dataFim != null) ? df.format(this.dataFim) : "";
+    }
+
+
     @Override
     public String toString(){
         return  "ID: "+id+"\n"+
