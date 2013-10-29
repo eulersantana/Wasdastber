@@ -44,24 +44,34 @@ public class SetorBean implements Serializable {
 	    session.close();
 	}	
 	
-	public String create(ActionEvent ae) throws ParseException
+	public void create(ActionEvent ae) throws ParseException
 	{
-		SessionFactory sf = Hibernate.getSessionFactory();
+	    SessionFactory sf = Hibernate.getSessionFactory();
 	    Session session = sf.openSession();
 	    Transaction tx = null;
-	
+	    String nomeSetor = "";
 	    
+            nomeSetor = setor.getNome();
 	    try{
-	    	tx = session.beginTransaction();
-	    	session.saveOrUpdate(setor); 
-	    	tx.commit();
+                if(verificaSetor(nomeSetor)){
+                    tx = session.beginTransaction();
+                    session.saveOrUpdate(setor); 
+                    tx.commit();
+                    setor = new Setor();
+                    FacesMessage msg = new FacesMessage("Setor adiconado com sucesso.");  
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }else{
+                    setor = new Setor();
+                    FacesMessage msg = new FacesMessage("O setor "+ nomeSetor+" já existe.");  
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
     	}catch (HibernateException e) {
     		if (tx!=null) tx.rollback();
 	    	e.printStackTrace(); 
     	}finally {
 	    	session.close();
 	    }
-	    return "list?faces-redirect=true";
+	    
     }
 	
 	public String update(RowEditEvent event) throws ParseException
@@ -75,7 +85,7 @@ public class SetorBean implements Serializable {
 		try{
 			tx = session.beginTransaction();
 			session.update(setor);setores = (ArrayList<Setor>) session.createQuery("FROM Setor").list();
-		    sal = new ListDataModel(setores);
+		        sal = new ListDataModel(setores);
 			session.flush();
 			tx.commit(); 
 		}catch (HibernateException e) {
@@ -89,7 +99,7 @@ public class SetorBean implements Serializable {
 	}
 	
 	
-	public void delete()
+	public void delete(Setor setor)
     {
 		SessionFactory sf = Hibernate.getSessionFactory();
 	    Session session = sf.openSession();
@@ -152,6 +162,35 @@ public class SetorBean implements Serializable {
 		this.setor_id = setor_id;
 	}
 	
+        public boolean verificaSetor(String nomeSetor) throws ParseException
+	{
+		SessionFactory sf = Hibernate.getSessionFactory();
+		Session session = sf.openSession();
+		Transaction tx = null;
+                ArrayList<Setor> listaSetor = new ArrayList<Setor>();
+		
+				
+		
+		try{
+			tx = session.beginTransaction();
+			listaSetor = (ArrayList<Setor>) session.createQuery("FROM Setor where nome = '"+nomeSetor+"'").list();
+                        for(Setor aux : listaSetor){
+                            if(nomeSetor.equals(aux.getNome())){
+                                return false;
+                            }
+                        }
+		    sal = new ListDataModel(setores);
+			session.flush();
+			tx.commit(); 
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+				e.printStackTrace(); 
+		}finally {
+		session.close(); 
+		}
+		
+		return true; 
+	}
     
 
 }

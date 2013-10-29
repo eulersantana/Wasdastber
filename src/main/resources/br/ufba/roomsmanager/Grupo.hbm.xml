@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="br.ufba.roomsmanager.model.Grupo" table="grupo">
+    <id name="id" type="int">
+      <column name="ID"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nome" type="java.lang.String">
+      <column name="NOME"/>
+    </property>
+    <property name="professorResponvel" type="java.lang.String">
+      <column name="PROFESSOR_RESPONSAVEL"/>
+    </property>
+  </class>
+  
+</hibernate-mapping>

@@ -6,51 +6,50 @@
                 xmlns:p="http://primefaces.org/ui" >
 
     <ui:define name="title">
-        RoomsManagerAdmin :: Lista de Setores
+        RoomsManagerAdmin :: Lista de Salas
     </ui:define>
 
     <ui:define name="content">
         <section id="geral">
             <p:layoutUnit position="center" id="conteudo">
-                <h:form id="form" styleClass="center_90"> 
+                <h:form id="form"> 
                     <p:growl id="messages" showDetail="true" /> 	
-                    <p:dataTable id="seto" var="setor" value="#{setorBean.setores}"
-                                 paginator="true" rows="10" 
+                    <p:dataTable id="grupo" var="grupos" value="#{grupoBean.listaGrupo}"
+                                 paginator="true" rows="15" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                 rowsPerPageTemplate="5,10,20,50,100"
+                                 rowsPerPageTemplate="5,10,15"
                                  editable="true"
                                  >
-                        <p:ajax event="rowEdit" listener="#{setorBean.update}" update=":form:messages" />
-                        <p:ajax event="rowEditCancel" listener="#{setorBean.onCancel}" update=":form:messages" />
+                        <p:ajax event="rowEdit" listener="#{grupoBean.update}" update=":form:messages" />
+                            <!--<p:ajax event="rowEditCancel" listener="#{grupoBean.onCancel}" update=":form:messages" />-->
                         <f:facet name="header">
-                            <h:outputText value="Lista de setor"/>
+                            <h:outputText value="Lista de grupos"/>
                         </f:facet>	  
-                        <p:column headerText="Nome">
+                        <p:column headerText="Grupo">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{setor.nome}"/>
+                                    <h:outputText value="#{grupos.nome}"/>
                                 </f:facet>							
                                 <f:facet name="input">  
-                                    <p:inputText value="#{setor.nome}" style="width:100%"/>  
+                                    <p:inputText value="#{grupos.nome}" style="width:100%"/>  
                                 </f:facet>
                             </p:cellEditor>  
                         </p:column>						
-                        <p:column headerText="E-mail">
+                        <p:column headerText="Professo Responsavel">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{setor.email}"/>
+                                    <h:outputText value="#{grupos.professorResponvel}"/>
                                 </f:facet>							
                                 <f:facet name="input">  
-                                    <p:inputText value="#{setor.email}" style="width:100%"/>  
+                                    <p:inputText value="#{grupos.professorResponvel}" style="width:100%"/>  
                                 </f:facet>
                             </p:cellEditor>  
-                        </p:column>		
-
+                        </p:column>
                         <p:column id="update" style="width:4%">  
                             <p:rowEditor />  
                         </p:column>
                         <p:column style="width:4%">  
-                            <p:commandButton id="deleteButton" action="#{setorBean.delete}" update="seto" icon="ui-icon-trash" title="Deletar"/>  
+                            <p:commandButton id="deleteButton" action="#{grupoBean.delete(grupos)}" update="grupo" icon="ui-icon-trash" title="Deletar"/>  
                         </p:column> 
                     </p:dataTable>
                 </h:form>

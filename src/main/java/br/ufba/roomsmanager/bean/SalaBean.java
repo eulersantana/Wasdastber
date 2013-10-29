@@ -24,7 +24,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.primefaces.event.RowEditEvent;
 
-
 @ManagedBean
 public class SalaBean implements Serializable{
 	private static final long serialVersionUID = -6735027036534961738L;
