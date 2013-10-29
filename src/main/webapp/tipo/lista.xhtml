@@ -20,17 +20,13 @@
                                  rowsPerPageTemplate="5,10,20,50,100"
                                  editable="true"
                                  >
-
                         <p:ajax event="rowEdit" update="tipos" listener="#{tipoBean.update}"/>
-
                         <f:facet name="header">
-                            <h:outputText value="Lista de Tipos de Funcionarios"/>
+                            <h:outputText value="Lista de tipos de usuários"/>
                         </f:facet>
-
                         <p:column headerText="ID">
                             <h:outputText value="#{tipo.id}"/>
                         </p:column>
-
                         <p:column headerText="Descricao">
                             <p:cellEditor>
                                 <f:facet name="output">
@@ -41,7 +37,6 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>		
-
                         <p:column style="width:4%">  
                             <p:rowEditor/>
                         </p:column>

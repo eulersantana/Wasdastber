@@ -111,7 +111,6 @@ body{
     font-family: Admiration;
     font-size: 30pt;
     color: #FF9900;
-
 }
 
 .nav{
@@ -150,14 +149,19 @@ body{
     box-shadow: none;
     height: 26px;
     box-shadow: 0px;
-    background: #eae7e5 !important;
-    background: -moz-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
+    background: #ccc !important;
+/*    background: -moz-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eae7e5), color-stop(78%, #cccccc), color-stop(100%, #cccccc)) !important;
     background: -webkit-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
     background: -o-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
     background: -ms-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
     background: linear-gradient(to bottom, #eae7e5 0%, #cccccc 78%, #cccccc 100%) !important;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae7e5', endColorstr='#cccccc',GradientType=0 )!important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae7e5', endColorstr='#cccccc',GradientType=0 )!important;*/
+}
+
+#topo_pagina a.btn{
+    margin-top: 3px;
+    height: 20px;
 }
 
 .middle{
@@ -222,6 +226,14 @@ body{
     width: 50%;
 }
 
+._60{
+    width: 60%;
+}
+
 #conteudo.ui-corner-all{
     border-radius: 0 !important;
+}
+
+#conteudo h1{
+    text-align: center;
 }

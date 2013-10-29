@@ -20,114 +20,111 @@
             <section id="geral">
                 <p:growl id="growl" showDetail="false" life="6000" />
                 <p:layoutUnit position="center" id="conteudo">
-                    <div class="container-fluid offset1 span10">
-                        <div class="row-fluid">					
+                    <div class="">
+                        <div class="center _50">
                             <p:message for="form"></p:message>
                             <h:form id="form">
                                 <h1>Cadastro de Sala</h1>
                                 <p:separator style="width:100%;height:1px" />
-                                    <div class="offset3">
+                                <div class="center _60">
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel for="dSetor">Setor</p:outputLabel>
+                                        <p:selectOneMenu style="margin-bottom:2px;" id="dSetor" required="true" value="#{salaBean.setor_id}" requiredMessage="O campo sala é Obrigatório">  
+                                            <f:selectItems value="#{setorBean.setores}" var="setor" itemLabel="#{setor.nome}" itemValue="#{setor.id}"/>
+                                        </p:selectOneMenu>							 
+                                        <p:commandButton id="botSetor" update=":form:dSetor"  oncomplete="eventDialog.show()" title="Adicionar um novo setor"  icon="ui-icon-circle-plus"></p:commandButton>
+                                        <p:outputLabel for="dNome">Nome</p:outputLabel>
+                                        <p:inputText id="dNome" value="#{salaBean.sala.nome}" size="60" lang="pt_BR" required="true"/>
+                                        <p:outputLabel></p:outputLabel>
+
+                                        <p:outputLabel for="dComputadores">Computadores</p:outputLabel>
+                                        <p:inputText id="dComputadores" value="#{salaBean.sala.computadores}" size="60" lang="pt_BR" required="true"/>
+                                        <p:outputLabel></p:outputLabel>
+
+                                        <p:outputLabel for="dCapacidade">Capacidade</p:outputLabel>
+                                        <p:inputText id="dCapacidade" value="#{salaBean.sala.capacidade}" size="60" lang="pt_BR" required="true"/>
+                                        <p:outputLabel></p:outputLabel>
 
 
-                                        <h:panelGrid columns="3">
+                                        <p:outputLabel for="iTipo">Tipo </p:outputLabel>  
+                                        <p:selectOneListbox id="iTipo" value="#{salaBean.sala.tipo}" required="true">  
+                                            <f:selectItem itemLabel="Reunião" itemValue="Reuniao" />  
+                                            <f:selectItem itemLabel="Laboratório" itemValue="Laboratorio" />  
+                                            <f:selectItem itemLabel="Auditório" itemValue="Auditorio" />  
 
-                                            <p:outputLabel for="dSetor">Setor</p:outputLabel>
-                                            <p:selectOneMenu style="margin-bottom:2px;" id="dSetor" required="true" value="#{salaBean.setor_id}" requiredMessage="O campo sala é Obrigatório">  
-                                                <f:selectItems value="#{setorBean.setores}" var="setor" itemLabel="#{setor.nome}" itemValue="#{setor.id}"/>
-                                            </p:selectOneMenu>							 
-                                            <p:commandButton id="botSetor" update=":form:dSetor"  oncomplete="eventDialog.show()" title="Adicionar um novo setor"  icon="ui-icon-circle-plus"></p:commandButton>
-                                            <p:outputLabel for="dNome">Nome</p:outputLabel>
-                                            <p:inputText id="dNome" value="#{salaBean.sala.nome}" size="60" lang="pt_BR" required="true"/>
-                                            <p:outputLabel></p:outputLabel>
+                                        </p:selectOneListbox>
+                                        <p:outputLabel></p:outputLabel> 	  						       	
 
-                                            <p:outputLabel for="dComputadores">Computadores</p:outputLabel>
-                                            <p:inputText id="dComputadores" value="#{salaBean.sala.computadores}" size="60" lang="pt_BR" required="true"/>
-                                            <p:outputLabel></p:outputLabel>
+                                        <p:outputPanel id="customPanel">  
+                                            <p:outputLabel for="dQuadro">Possui Quadro</p:outputLabel> 
+                                            <p:selectOneRadio  id="dQuadro" value="#{salaBean.sala.quadro}" layout="custom" required="true">  
+                                                <f:selectItem  itemLabel="Sim" itemValue="true" />  
+                                                <f:selectItem  itemLabel="Não" itemValue="false" />						           
+                                            </p:selectOneRadio>
+                                            <p:outputLabel></p:outputLabel>  
+                                            <h:panelGrid columns="2">  
+                                                <p:radioButton id="opt1" for="dQuadro" itemIndex="0"/>  
+                                                <h:outputLabel for="opt1" value="SIM" />  								
+                                                <p:radioButton id="opt2" for="dQuadro" itemIndex="1"/>  
+                                                <h:outputLabel for="opt2" value="Não" />								  
+                                            </h:panelGrid>
+                                        </p:outputPanel>									
+                                        <p:outputPanel id="customPanel1">  
+                                            <p:outputLabel for="dRetropojetor">Possui Retropojetor</p:outputLabel> 
+                                            <p:selectOneRadio  id="dRetropojetor" value="#{salaBean.sala.retroprojetor}" layout="custom" required="true">  
+                                                <f:selectItem  itemLabel="Sim" itemValue="true" />  
+                                                <f:selectItem  itemLabel="Não" itemValue="false" />						           
+                                            </p:selectOneRadio> 
+                                            <h:panelGrid columns="2">  
+                                                <p:radioButton id="opt3" for="dRetropojetor" itemIndex="0"/>  
+                                                <h:outputLabel for="opt3" value="SIM" />  								
+                                                <p:radioButton id="opt4" for="dRetropojetor" itemIndex="1"/>  
+                                                <h:outputLabel for="opt4" value="Não" />								  
+                                            </h:panelGrid>
 
-                                            <p:outputLabel for="dCapacidade">Capacidade</p:outputLabel>
-                                            <p:inputText id="dCapacidade" value="#{salaBean.sala.capacidade}" size="60" lang="pt_BR" required="true"/>
-                                            <p:outputLabel></p:outputLabel>
+                                        </p:outputPanel>	
+                                        <p:outputLabel></p:outputLabel>							
+                                        <p:outputPanel id="customPanel2">  
+                                            <p:outputLabel for="dMultimidia">Possui Multimidia</p:outputLabel> 
+                                            <p:selectOneRadio  id="dMultimidia" value="#{salaBean.sala.multimidia}" layout="custom" required="true">  
+                                                <f:selectItem  itemLabel="Sim" itemValue="true" />  
+                                                <f:selectItem  itemLabel="Não" itemValue="false" />						           
+                                            </p:selectOneRadio> 
+                                            <h:panelGrid columns="2">  
+                                                <p:radioButton id="opt5" for="dMultimidia" itemIndex="0"/>  
+                                                <h:outputLabel for="opt5" value="SIM" />  								
+                                                <p:radioButton id="opt6" for="dMultimidia" itemIndex="1"/>  
+                                                <h:outputLabel for="opt6" value="Não" />								  
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                        <p:outputPanel id="customPanel3">  
+                                            <p:outputLabel for="dArCondiconado">Possui Arcondicionado</p:outputLabel> 
+                                            <p:selectOneRadio  id="dArCondiconado" value="#{salaBean.sala.arcondicionado}" layout="custom" required="true">  
+                                                <f:selectItem  itemLabel="Sim" itemValue="true" />  
+                                                <f:selectItem  itemLabel="Não" itemValue="false" />						           
+                                            </p:selectOneRadio> 
+                                            <h:panelGrid columns="2">  
+                                                <p:radioButton id="opt7" for="dArCondiconado" itemIndex="0"/>  
+                                                <h:outputLabel for="opt7" value="SIM" />  								
+                                                <p:radioButton id="opt8" for="dArCondiconado" itemIndex="1"/>  
+                                                <h:outputLabel for="opt8" value="Não" />								  
+                                            </h:panelGrid>
+                                        </p:outputPanel>	
+                                    </h:panelGrid> 
+                                </div>
+                                <p:separator style="width:100%;height:1px" />
+                                <div style="text-align:center;">
+                                    <p:commandButton value="Enviar" ajax="false" actionListener="#{salaBean.create}" update="growl"/>
 
+                                    <p:commandButton value="Resetar" type="reset"/>
+                                </div>
 
-                                            <p:outputLabel for="iTipo">Tipo </p:outputLabel>  
-                                            <p:selectOneListbox id="iTipo" value="#{salaBean.sala.tipo}" required="true">  
-                                                <f:selectItem itemLabel="Reunião" itemValue="Reuniao" />  
-                                                <f:selectItem itemLabel="Laboratório" itemValue="Laboratorio" />  
-                                                <f:selectItem itemLabel="Auditório" itemValue="Auditorio" />  
-
-                                            </p:selectOneListbox>
-                                            <p:outputLabel></p:outputLabel> 	  						       	
-
-                                            <p:outputPanel id="customPanel">  
-                                                <p:outputLabel for="dQuadro">Possui Quadro</p:outputLabel> 
-                                                <p:selectOneRadio  id="dQuadro" value="#{salaBean.sala.quadro}" layout="custom" required="true">  
-                                                    <f:selectItem  itemLabel="Sim" itemValue="true" />  
-                                                    <f:selectItem  itemLabel="Não" itemValue="false" />						           
-                                                </p:selectOneRadio>
-                                                <p:outputLabel></p:outputLabel>  
-                                                <h:panelGrid columns="2">  
-                                                    <p:radioButton id="opt1" for="dQuadro" itemIndex="0"/>  
-                                                    <h:outputLabel for="opt1" value="SIM" />  								
-                                                    <p:radioButton id="opt2" for="dQuadro" itemIndex="1"/>  
-                                                    <h:outputLabel for="opt2" value="Não" />								  
-                                                </h:panelGrid>
-                                            </p:outputPanel>									
-                                            <p:outputPanel id="customPanel1">  
-                                                <p:outputLabel for="dRetropojetor">Possui Retropojetor</p:outputLabel> 
-                                                <p:selectOneRadio  id="dRetropojetor" value="#{salaBean.sala.retroprojetor}" layout="custom" required="true">  
-                                                    <f:selectItem  itemLabel="Sim" itemValue="true" />  
-                                                    <f:selectItem  itemLabel="Não" itemValue="false" />						           
-                                                </p:selectOneRadio> 
-                                                <h:panelGrid columns="2">  
-                                                    <p:radioButton id="opt3" for="dRetropojetor" itemIndex="0"/>  
-                                                    <h:outputLabel for="opt3" value="SIM" />  								
-                                                    <p:radioButton id="opt4" for="dRetropojetor" itemIndex="1"/>  
-                                                    <h:outputLabel for="opt4" value="Não" />								  
-                                                </h:panelGrid>
-
-                                            </p:outputPanel>	
-                                            <p:outputLabel></p:outputLabel>							
-                                            <p:outputPanel id="customPanel2">  
-                                                <p:outputLabel for="dMultimidia">Possui Multimidia</p:outputLabel> 
-                                                <p:selectOneRadio  id="dMultimidia" value="#{salaBean.sala.multimidia}" layout="custom" required="true">  
-                                                    <f:selectItem  itemLabel="Sim" itemValue="true" />  
-                                                    <f:selectItem  itemLabel="Não" itemValue="false" />						           
-                                                </p:selectOneRadio> 
-                                                <h:panelGrid columns="2">  
-                                                    <p:radioButton id="opt5" for="dMultimidia" itemIndex="0"/>  
-                                                    <h:outputLabel for="opt5" value="SIM" />  								
-                                                    <p:radioButton id="opt6" for="dMultimidia" itemIndex="1"/>  
-                                                    <h:outputLabel for="opt6" value="Não" />								  
-                                                </h:panelGrid>
-                                            </p:outputPanel>
-                                            <p:outputPanel id="customPanel3">  
-                                                <p:outputLabel for="dArCondiconado">Possui Arcondicionado</p:outputLabel> 
-                                                <p:selectOneRadio  id="dArCondiconado" value="#{salaBean.sala.arcondicionado}" layout="custom" required="true">  
-                                                    <f:selectItem  itemLabel="Sim" itemValue="true" />  
-                                                    <f:selectItem  itemLabel="Não" itemValue="false" />						           
-                                                </p:selectOneRadio> 
-                                                <h:panelGrid columns="2">  
-                                                    <p:radioButton id="opt7" for="dArCondiconado" itemIndex="0"/>  
-                                                    <h:outputLabel for="opt7" value="SIM" />  								
-                                                    <p:radioButton id="opt8" for="dArCondiconado" itemIndex="1"/>  
-                                                    <h:outputLabel for="opt8" value="Não" />								  
-                                                </h:panelGrid>
-                                            </p:outputPanel>	
-                                        </h:panelGrid> 
-                                    </div>
-                                    <p:separator style="width:100%;height:1px" />
-				       <div style="text-align:center;">
-                                            <p:commandButton value="Enviar" ajax="false" actionListener="#{salaBean.create}" update="growl"/>
-                                        
-                                            <p:commandButton value="Resetar" type="reset"/>
-                                        </div>
-                                  
                             </h:form>
                         </div>
                         <h:form>
                             <p:growl id="messages" showDetail="false" life="6000" />
                             <div class="container-fluid span8" id="setorDialogo">
-                                <p:dialog widgetVar="eventDialog" header="Cadastra setor" showEffect="clip" hideEffect="clip">  
+                                <p:dialog widgetVar="eventDialog" header="Novo setor" showEffect="clip" hideEffect="clip">  
                                     <h:panelGrid id="eventDetails" columns="3">
                                         <h:panelGrid columns="2"> 
                                             <p:outputLabel for="dNome">Nome</p:outputLabel>
@@ -136,9 +133,8 @@
                                             <p:inputText id="email" value="#{setorBean.setor.email}" required="true" title="Email" requiredMessage="O campo Email é Obrigatório"  validatorMessage="Email inválido">
                                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                             </p:inputText>
-                                       
-                                           <p:commandButton value="Enviar" actionListener="#{setorBean.create}" oncomplete="eventDialog.hide();" update="messages"/>
-                                           <p:commandButton value="Resetar" type="reset"/>
+                                            <p:commandButton value="Enviar" actionListener="#{setorBean.create}" oncomplete="eventDialog.hide();" update="messages"/>
+                                            <p:commandButton value="Resetar" type="reset"/>
                                         </h:panelGrid>    
                                     </h:panelGrid>
                                 </p:dialog>

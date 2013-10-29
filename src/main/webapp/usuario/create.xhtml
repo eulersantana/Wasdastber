@@ -9,14 +9,13 @@
         <section id="geral">
             <p:growl id="growl" showDetail="false" life="6000" />
             <p:layoutUnit position="center" id="conteudo">
-                <div class="container-fluid span10">
+                <div class="center _50">
                     <div class="row-fluid">
                         <p:message for="form_create"></p:message>
                         <h:form id="form_create">
-
-                            <h1>Cadastro de Usuário</h1>
+                            <h1>Novo Usuário</h1>
                             <p:separator style="width:100%;height:1px" />
-                            <h:panelGrid id="panelGrid" columns="3">
+                            <h:panelGrid id="panelGrid" columns="3" styleClass="center">
                                 <p:outputLabel for="dTipo">Tipo</p:outputLabel>
                                 <p:selectOneMenu id="dTipo" required="true" value="#{usuarioBean.tipo_id}" style="width: 300px" requiredMessage="O campo tipo é Obrigatório">  
                                     <f:selectItems var="tipo" value="#{usuarioBean.tipos}" itemLabel="#{tipo.descricao}"  itemValue="#{tipo.id}"/>
@@ -36,14 +35,12 @@
                                 <p:outputLabel for="num_cadastro">Numero de Cadastro</p:outputLabel>
                                 <p:inputMask id="num_cadastro" style="width: 300px" value="#{usuarioBean.usuario.num_matricula}" title="Numero de Matricula" mask="999999"/>
                                 <p:outputLabel></p:outputLabel>
-
                             </h:panelGrid>
                             <p:separator style="width:100%;height:1px" />
                             <div style="text-align:center;">
                                 <p:commandButton value="Criar" id="enviar" ajax="false" actionListener="#{usuarioBean.create}" update="growl"/>
                                 <p:commandButton value="Resetar" update="panelGrid" process="@this"></p:commandButton>
                             </div>
-
                         </h:form>
                     </div>
                     <h:form>

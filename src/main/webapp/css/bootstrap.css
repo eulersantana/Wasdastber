@@ -6172,70 +6172,6 @@ a.badge:focus {
 
 /***********************************/
 
-
-#reservas.table tbody tr td {
-  &{
-    text-align: center;
-  }
-  &.success {
-    background-color: #dff0d8;
-  }
-  &.error {
-    background-color: #f2dede;
-  }
-  &.warning {
-    background-color: #fcf8e3;
-  }
-  &.info {
-    background-color: #d9edf7;
-  }
-}
-
-#reservas.table-hover tbody tr td {
-  &.success:hover {
-    background-color: #d0e9c6;
-  }
-  &.error:hover {
-    background-color: #ebcccc;
-  }
-  &.warning:hover {
-    background-color: #faf2cc;
-  }
-  &.info:hover {
-    background-color: #c4e3f3;
-  }
-}
-
-#reservas.table thead th {
-  &.success > td {
-    background-color: #dff0d8;
-  }
-  &.error > td {
-    background-color: #f2dede;
-  }
-  &.warning > td {
-    background-color: #fcf8e3;
-  }
-  &.info > td {
-    background-color: #d9edf7;
-  }
-}
-
-#reservas.table-hover thead th {
-  &.success:hover > td {
-    background-color: #d0e9c6;
-  }
-  &.error:hover > td {
-    background-color: #ebcccc;
-  }
-  &.warning:hover > td {
-    background-color: #faf2cc;
-  }
-  &.info:hover > td {
-    background-color: #c4e3f3;
-  }
-}
-
 .fixed {
   position: fixed;
 }
@@ -6256,22 +6192,23 @@ a.badge:focus {
 
 .navbar-inverse .navbar-inner2 {
   box-shadow: 0px 3px;
-  background: #eae7e5;
-  /* Old browsers */
+  background: #ccc;
+  height: 42px;
+/*   Old browsers 
   background: -moz-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%);
-  /* FF3.6+ */
+   FF3.6+ 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eae7e5), color-stop(78%, #cccccc), color-stop(100%, #cccccc));
-  /* Chrome,Safari4+ */
+   Chrome,Safari4+ 
   background: -webkit-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%);
-  /* Chrome10+,Safari5.1+ */
+   Chrome10+,Safari5.1+ 
   background: -o-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%);
-  /* Opera 11.10+ */
+   Opera 11.10+ 
   background: -ms-linear-gradient(top, #eae7e5 0%, #cccccc 78%, #cccccc 100%);
-  /* IE10+ */
+   IE10+ 
   background: linear-gradient(to bottom, #eae7e5 0%, #cccccc 78%, #cccccc 100%);
-  /* W3C */
+   W3C 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae7e5', endColorstr='#cccccc',GradientType=0 );
-  /* IE6-9 */
+   IE6-9 */
 }
 
 .navbar-inverse .navbar-inner2 a,.navbar-inverse .navbar-inner2 .nav a {
@@ -6294,7 +6231,7 @@ a.badge:focus {
 .navbar-inner2 .brand {
   font-family: Impregnable;
   font-size: 28pt;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #eae7e5;
 }
 
 .navbar{
