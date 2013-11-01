@@ -9,7 +9,7 @@
     <property name="nome" type="java.lang.String">
       <column name="NOME"/>
     </property>
-    <property name="professorResponvel" type="java.lang.String">
+    <property name="professorResponsavel" type="java.lang.String">
       <column name="PROFESSOR_RESPONSAVEL"/>
     </property>
   </class>

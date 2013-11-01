@@ -9,19 +9,18 @@
         <section id="geral">
             <p:growl id="growl" showDetail="false" life="6000" />
             <p:layoutUnit position="center" id="conteudo">
-                <div class="container-fluid span10">
+                <div class="center form_acess _50">
                     <div class="row-fluid">
                         <p:message for="form_create"></p:message>
                         <h:form id="form_create">
-
                             <h1>Cadastro de Grupo</h1>
                             <p:separator style="width:100%;height:1px" />
                             <h:panelGrid id="panelGrid" columns="3">
                                 <p:outputLabel for="nome">Nome</p:outputLabel>
                                 <p:inputText id="nome" value="#{grupoBean.grupo.nome}" size="60" lang="pt_BR" required="true"/>
                                 <p:outputLabel></p:outputLabel>
-                                <p:outputLabel for="pResponsavel">Professor Responsavel</p:outputLabel>
-                                <p:inputText id="pResponsavel" value="#{grupoBean.grupo.professorResponvel}" size="60" lang="pt_BR" required="true"/>
+                                <p:outputLabel for="pResponsavel">Professor Responsável</p:outputLabel>
+                                <p:inputText id="pResponsavel" value="#{grupoBean.grupo.professorResponsavel}" size="60" lang="pt_BR" required="true"/>
                                 <p:outputLabel></p:outputLabel>
                             </h:panelGrid>
                             <p:separator style="width:100%;height:1px" />
@@ -29,10 +28,8 @@
                                 <p:commandButton value="Criar" id="enviar" ajax="false" actionListener="#{grupoBean.create}" update="growl"/>
                                 <p:commandButton value="Resetar" update="panelGrid" process="@this"></p:commandButton>
                             </div>
-
                         </h:form>
                     </div>
-                    
                 </div>
             </p:layoutUnit>
         </section>

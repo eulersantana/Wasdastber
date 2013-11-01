@@ -12,12 +12,12 @@
     <ui:define name="content">
         <section id="geral">
             <p:layoutUnit position="center" id="conteudo">
-                <h:form id="form"> 
+                <h:form id="form" styleClass="center_90"> 
                     <p:growl id="messages" showDetail="true" /> 	
                     <p:dataTable id="grupo" var="grupos" value="#{grupoBean.listaGrupo}"
                                  paginator="true" rows="15" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                 rowsPerPageTemplate="5,10,15"
+                                 rowsPerPageTemplate="5,10,20,50,100"
                                  editable="true"
                                  >
                         <p:ajax event="rowEdit" listener="#{grupoBean.update}" update=":form:messages" />
@@ -35,13 +35,13 @@
                                 </f:facet>
                             </p:cellEditor>  
                         </p:column>						
-                        <p:column headerText="Professo Responsavel">
+                        <p:column headerText="Professor Responsável">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{grupos.professorResponvel}"/>
+                                    <h:outputText value="#{grupos.professorResponsavel}"/>
                                 </f:facet>							
                                 <f:facet name="input">  
-                                    <p:inputText value="#{grupos.professorResponvel}" style="width:100%"/>  
+                                    <p:inputText value="#{grupos.professorResponsavel}" style="width:100%"/>  
                                 </f:facet>
                             </p:cellEditor>  
                         </p:column>

@@ -19,6 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -36,13 +37,18 @@ public class GrupoBean implements Serializable{
     private Grupo grupo = new Grupo();
     private Grupo grupoRow;
 
-   
-
     @PostConstruct
     public void GrupoBean() {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
-        listaGrupo = (ArrayList<Grupo>) session.createQuery("FROM Grupo").list();
+        Query consulta = session.createQuery("FROM Grupo");
+        if(consulta.getReturnTypes().length != 0)
+        {
+            listaGrupo = (ArrayList<Grupo>) consulta.list();
+        }
+        else{
+            listaGrupo = new ArrayList<Grupo>();
+        }
         gru = new ListDataModel(listaGrupo);
         session.close();
     }
@@ -89,6 +95,8 @@ public class GrupoBean implements Serializable{
             tx = session.beginTransaction();
             session.update(grupo);
             session.flush();
+            FacesMessage msg = new FacesMessage("Atualizado com sucesso!");  
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -108,18 +116,22 @@ public class GrupoBean implements Serializable{
         Transaction tx = null;
         String nomeGrupo = "";
         int escolha = 0;
-        
-
         try {
             nomeGrupo = grupo.getNome();
-           escolha = JOptionPane.showConfirmDialog(null, "Será deletado "+nomeGrupo, "Deletando Grupo", 1);
+            escolha = JOptionPane.showConfirmDialog(null, "Deseja deletar "+nomeGrupo+" ?", "Deletando Grupo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(escolha == JOptionPane.OK_OPTION){
-            
                 tx = session.beginTransaction();
-                session.delete(grupo);
-                tx.commit();
-                listaGrupo = (ArrayList<Grupo>) session.createQuery("FROM Grupo").list();
-                gru = new ListDataModel(listaGrupo);
+                try{
+                    session.delete(grupo);
+                    tx.commit();
+                    listaGrupo = (ArrayList<Grupo>) session.createQuery("FROM Grupo").list();
+                    gru = new ListDataModel(listaGrupo);
+                    FacesMessage msg = new FacesMessage("Deletado com sucesso!");  
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }catch(Exception e){
+                    FacesMessage msg = new FacesMessage("Não possível deletar.");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
             }else{
                 nomeGrupo = "";
                 grupo = new Grupo();
@@ -134,12 +146,6 @@ public class GrupoBean implements Serializable{
             session.close();
         }
     }
-
-    
-//    public void select() {
-//        this.sala = this.sal.getRowData();
-////        JOptionPane.showMessageDialog(null, sala.getNome());
-//    }
 
     private String getRandomModel() {
         return UUID.randomUUID().toString().substring(0, 8);
@@ -172,8 +178,6 @@ public class GrupoBean implements Serializable{
     public Grupo getGrupoRow() {
         return grupoRow;
     }
-
-    
 
     public boolean verificaSala(String nomeGrupo) throws ParseException {
         SessionFactory sf = Hibernate.getSessionFactory();

@@ -20,12 +20,13 @@
     <property name="hibernate.show_sql">true</property>
     <!-- Drop and re-create the database schema on startup -->
     <property name="hibernate.hbm2ddl.auto">update</property>
-    <mapping resource="br/ufba/roomsmanager/Usuario.hbm.xml"/>
-    <mapping resource="br/ufba/roomsmanager/Setor.hbm.xml"/>
-    <mapping resource="br/ufba/roomsmanager/Sala.hbm.xml"/>
-    <mapping resource="br/ufba/roomsmanager/ReservaSala.hbm.xml"/>
-    <mapping resource="br/ufba/roomsmanager/Tipo.hbm.xml"/>
     <mapping resource="br/ufba/roomsmanager/Acesso.hbm.xml"/>
     <mapping resource="br/ufba/roomsmanager/ControleAcesso.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/Grupo.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/ReservaSala.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/Setor.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/Sala.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/Tipo.hbm.xml"/>
+    <mapping resource="br/ufba/roomsmanager/Usuario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

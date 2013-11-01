@@ -13,16 +13,16 @@ import java.io.Serializable;
 public class Grupo implements Serializable{
     private int id;
     private String nome;
-    private String professorResponvel;
+    private String professorResponsavel;
 
     public Grupo(){
         
     }
     
-    public Grupo(int id, String nome, String professorResponvel) {
+    public Grupo(int id, String nome, String professorResponsavel) {
         this.id = id;
         this.nome = nome;
-        this.professorResponvel = professorResponvel;
+        this.professorResponsavel = professorResponsavel;
     }
 
     public int getId() {
@@ -41,16 +41,12 @@ public class Grupo implements Serializable{
         this.nome = nome;
     }
 
-    public String getProfessorResponvel() {
-        return professorResponvel;
+    public String getProfessorResponsavel() {
+        return professorResponsavel;
     }
 
-    public void setProfessorResponvel(String professorResponvel) {
-        this.professorResponvel = professorResponvel;
+    public void setProfessorResponsavel(String professorResponsavel) {
+        this.professorResponsavel = professorResponsavel;
     }
-    
-        
-    
-    
     
 }
