@@ -237,3 +237,7 @@ body{
 #conteudo h1{
     text-align: center;
 }
+
+.ui-state-highlight .ui-icon{
+    background-image: url('images/image10.png') !important;
+}
