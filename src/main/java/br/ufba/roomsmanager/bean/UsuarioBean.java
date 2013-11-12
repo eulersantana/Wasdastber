@@ -21,9 +21,11 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.ufba.roomsmanager.dao.Hibernate;
+import br.ufba.roomsmanager.model.Login;
 import br.ufba.roomsmanager.model.Sala;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.hibernate.criterion.Example;
 
 @ManagedBean
 public class UsuarioBean implements Serializable {
@@ -149,6 +151,29 @@ public class UsuarioBean implements Serializable {
         } finally {
             session.close();
         }
+    }
+    
+    public ArrayList buscaUsuario(Login login){
+        SessionFactory sf = Hibernate.getSessionFactory();
+        Session session = sf.openSession();
+        Transaction tx = null;
+        ArrayList<Login> listaUser = new ArrayList<Login>();
+
+        try {
+            tx = session.beginTransaction();
+            listaUser = (ArrayList<Login>) session.createQuery("FROM Usuario where nome = '" + login.getUsuario() + "' and senha = '"+login.getSenha()+"'").list();
+            session.flush();
+            tx.commit();
+            return listaUser;  
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
     }
 
     public void select() {

@@ -1,6 +1,10 @@
 package br.ufba.roomsmanager.model;
 
+import br.ufba.roomsmanager.bean.UsuarioBean;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.swing.JOptionPane;
 
 public class Login {
 	
@@ -34,8 +38,15 @@ public class Login {
 	}
 	
 	public boolean validate(){
-        if(usuario != null  && usuario.equals("admin") && senha != null  && senha.equals("admin")) {  
-            return true;
+        UsuarioBean logar = new UsuarioBean();
+        ArrayList user = new ArrayList();
+        user = logar.buscaUsuario(new Login(getUsuario(),getSenha()));
+        if(user != null){
+            Usuario pessoa = (Usuario) user.get(0);
+//            JOptionPane.showConfirmDialog(null, pessoa.getNome()+" e "+pessoa.getSenha());
+            if(usuario != null  && usuario.equals(pessoa.getNome()) && senha != null  && senha.equals(pessoa.getSenha())) {  
+                return true;
+            }
         }
         return false;
 	}

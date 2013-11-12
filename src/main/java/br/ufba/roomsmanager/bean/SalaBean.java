@@ -162,9 +162,9 @@ public class SalaBean implements Serializable {
     }
 
     public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edição Cancelada", ((Sala) event.getObject()).getNome());
-        JOptionPane.showMessageDialog(null, "Edição cancelada");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+//        FacesMessage msg = new FacesMessage("Edição Cancelada", ((Sala) event.getObject()).getNome());
+//        JOptionPane.showMessageDialog(null, "Edição cancelada");
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public Sala getSala(){

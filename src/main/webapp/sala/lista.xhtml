@@ -43,7 +43,7 @@
                                     <h:outputText value="#{salas.setorNome}"/>
                                 </f:facet>							
                                 <f:facet name="input">
-                                    <h:selectOneMenu value="#{salaBean.setor_id}" >
+                                    <h:selectOneMenu value="#{salaBean.setor_id}" style="width:100%">
                                         <f:selectItems value="#{setorBean.setores}"
                                                        var="man" 
                                                        itemLabel="#{man.nome}"
@@ -58,7 +58,7 @@
                                     <h:outputText value="#{salas.tipo}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <h:selectOneMenu value="#{salas.setorNome}" >
+                                    <h:selectOneMenu value="#{salas.setorNome}" style="width:100%" >
                                         <f:selectItem itemLabel="Aula" itemValue="Aula" />
                                         <f:selectItem itemLabel="Auditório" itemValue="Auditorio" /> 
                                         <f:selectItem itemLabel="Laboratório" itemValue="Laboratorio" />  
@@ -74,7 +74,7 @@
                                     <h:outputText value="#{salas.computadores}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{salas.computadores}"/>
+                                    <p:inputText value="#{salas.computadores}" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>	
                         </p:column>
@@ -83,8 +83,8 @@
                                 <f:facet name="output">
                                     <h:outputText value="#{salas.capacidade}"/>
                                 </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{salas.capacidade}"/>
+                                <f:facet name="input" >
+                                    <p:inputText value="#{salas.capacidade}" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>	
                         </p:column>
