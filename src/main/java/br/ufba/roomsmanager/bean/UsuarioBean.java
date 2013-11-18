@@ -23,6 +23,9 @@ import javax.faces.model.ListDataModel;
 import br.ufba.roomsmanager.dao.Hibernate;
 import br.ufba.roomsmanager.model.Login;
 import br.ufba.roomsmanager.model.Sala;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.hibernate.criterion.Example;
@@ -31,6 +34,7 @@ import org.hibernate.criterion.Example;
 public class UsuarioBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static String senhaValor = "********";
     private Usuario usuario = new Usuario();
     private DataModel<Usuario> usuarios;
     private ArrayList<Tipo> tipos = new ArrayList<Tipo>();
@@ -40,6 +44,14 @@ public class UsuarioBean implements Serializable {
         return usuario;
     }
 
+    public  String getSenhaValor() {
+        return senhaValor;
+    }
+
+    public void setSenhaValor(String senhaValor) {
+        UsuarioBean.senhaValor = senhaValor;
+    }
+    
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
@@ -74,14 +86,19 @@ public class UsuarioBean implements Serializable {
         session.close();
     }
 
-    public void create(ActionEvent ae) throws ParseException {
+    public void create(ActionEvent ae) throws ParseException, NoSuchAlgorithmException {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
+        MessageDigest md = null;
         Transaction tx = null;
         String email = "";
+        
+
         email = usuario.getEmail();
         System.out.println("E-mail : " + email);
         try {
+           
+            usuario.setSenha(md5(usuario.getSenha()));
             tx = session.beginTransaction();
             usuario.setTipo_id(Integer.valueOf(tipo_id));
             session.saveOrUpdate(usuario);
@@ -114,6 +131,7 @@ public class UsuarioBean implements Serializable {
 
         try {
             tx = session.beginTransaction();
+            usuario.setSenha(md5(senhaValor));
             usuario.setTipo_id(Integer.valueOf(tipo_id));
             session.update(usuario);
             session.flush();
@@ -152,19 +170,20 @@ public class UsuarioBean implements Serializable {
             session.close();
         }
     }
-    
-    public ArrayList buscaUsuario(Login login){
+
+    public ArrayList buscaUsuario(Login login) {
         SessionFactory sf = Hibernate.getSessionFactory();
         Session session = sf.openSession();
         Transaction tx = null;
         ArrayList<Login> listaUser = new ArrayList<Login>();
 
         try {
+            login.setSenha(md5(login.getSenha()));
             tx = session.beginTransaction();
-            listaUser = (ArrayList<Login>) session.createQuery("FROM Usuario where nome = '" + login.getUsuario() + "' and senha = '"+login.getSenha()+"'").list();
+            listaUser = (ArrayList<Login>) session.createQuery("FROM Usuario where email = '" + login.getUsuario() + "' and senha = '" + login.getSenha() + "'").list();
             session.flush();
             tx.commit();
-            return listaUser;  
+            return listaUser;
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -180,5 +199,16 @@ public class UsuarioBean implements Serializable {
         this.usuario = this.usuarios.getRowData();
     }
 
-   
+    public static String md5(String senha) {
+        String sen = "";
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));
+        sen = hash.toString(16);
+        return sen;
+    }
 }
