@@ -41,13 +41,9 @@ public class Login {
         UsuarioBean logar = new UsuarioBean();
         ArrayList user = new ArrayList();
         user = logar.buscaUsuario(new Login(getUsuario(), getSenha()));
-        senha = logar.md5(senha);
-        if (user.get(0) != null) {
-            Usuario pessoa = (Usuario) user.get(0);
-//            JOptionPane.showConfirmDialog(null, pessoa.getNome()+" e "+pessoa.getSenha()+" Senha escrita:"+senha);
-            if (usuario != null && usuario.equals(pessoa.getEmail()) && senha != null && senha.equals(pessoa.getSenha())) {
-                return true;
-            }
+    
+        if (!user.isEmpty()) {
+            return true;            
         }
         return false;
     }

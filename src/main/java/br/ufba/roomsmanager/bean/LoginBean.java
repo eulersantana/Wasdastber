@@ -20,8 +20,7 @@ public class LoginBean{
 	RequestContext context = RequestContext.getCurrentInstance();  
         FacesMessage msg = null;  
         boolean loggedIn = false;  
-        System.out.println(login.getUsuario()); 
-        
+                
         if(login.validate()){  
             loggedIn = true;  
             

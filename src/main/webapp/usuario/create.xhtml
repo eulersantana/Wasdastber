@@ -17,9 +17,9 @@
                             <p:separator style="width:100%;height:1px" />
                             <h:panelGrid id="panelGrid" columns="3" styleClass="center">
                                 <p:outputLabel for="dTipo">Tipo</p:outputLabel>
-                                <p:selectManyCheckbox id="dTipo" value="#{usuarioBean.tipo_id}" >
+                                <p:selectOneRadio id="dTipo" value="#{usuarioBean.tipo_id}" >
                                     <f:selectItems var="tipo" value="#{usuarioBean.tipos}" itemLabel="#{tipo.descricao}"  itemValue="#{tipo.id}"/>
-                                </p:selectManyCheckbox>
+                                </p:selectOneRadio>
 <!--                                            
                                 <p:selectOneMenu id="dTipo" required="true" value="#{usuarioBean.tipo_id}" style="width: 300px" requiredMessage="O campo tipo é Obrigatório">  
                                     <f:selectItems var="tipo" value="#{usuarioBean.tipos}" itemLabel="#{tipo.descricao}"  itemValue="#{tipo.id}"/>

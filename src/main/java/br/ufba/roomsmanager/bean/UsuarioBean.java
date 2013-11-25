@@ -28,6 +28,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.swing.JOptionPane;
 import org.hibernate.criterion.Example;
 
 @ManagedBean
@@ -182,7 +183,7 @@ public class UsuarioBean implements Serializable {
             tx = session.beginTransaction();
             listaUser = (ArrayList<Login>) session.createQuery("FROM Usuario where email = '" + login.getUsuario() + "' and senha = '" + login.getSenha() + "'").list();
             session.flush();
-            tx.commit();
+            tx.commit();            
             return listaUser;
         } catch (HibernateException e) {
             if (tx != null) {
